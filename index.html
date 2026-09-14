@@ -4,280 +4,83 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#07233f">
-  <meta name="color-scheme" content="dark">
   <title>Colins Geografie-Lernprogramm</title>
   <style>
-    :root {
-      --navy: #07233f;
-      --navy-2: #0c3258;
-      --navy-3: #13416e;
-      --turq: #2ec4b6;
-      --turq-2: #1aa89b;
-      --green: #3dcc7a;
-      --green-2: #24965a;
-      --cream: #f4fbf8;
-      --text: #f3fbff;
-      --muted: #b7d0e0;
-      --danger: #ff6b6b;
-      --warn: #ffc857;
-      --ok: #3dcc7a;
-      --card: #0e3a63;
-      --shadow: 0 10px 30px rgba(0, 0, 0, .28);
-      --radius: 16px;
-      --focus: #7af0e4;
-    }
-    * { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; }
-    html { overflow-x: hidden; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      font-size: 16px;
-      line-height: 1.45;
-      color: var(--text);
-      background:
-        radial-gradient(1200px 500px at 10% -10%, #156089 0%, transparent 55%),
-        radial-gradient(900px 400px at 110% 0%, #0f6a5c 0%, transparent 50%),
-        var(--navy);
-      min-height: 100vh;
-      min-height: 100dvh;
-      overflow-x: hidden;
-    }
-    img { max-width: 100%; }
-    button, select { font: inherit; }
-    .skip {
-      position: absolute; left: -999px; top: 0;
-    }
-    .skip:focus {
-      left: 8px; top: 8px; z-index: 20;
-      background: var(--cream); color: #07233f; padding: 8px 12px; border-radius: 8px;
-    }
-    .app {
-      width: min(920px, 100%);
-      margin: 0 auto;
-      padding: 12px 12px 108px;
-    }
-    .top {
-      background: linear-gradient(180deg, rgba(14,58,99,.92), rgba(7,35,63,.88));
-      border: 1px solid rgba(46,196,182,.28);
-      border-radius: var(--radius);
-      padding: 14px;
-      box-shadow: var(--shadow);
-    }
-    h1 { font-size: 1.35rem; margin: 0 0 4px; letter-spacing: .01em; }
-    .sub { color: var(--muted); margin: 0 0 12px; }
-    .stats {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-    }
-    @media (min-width: 640px) {
-      .stats { grid-template-columns: 1.4fr .8fr auto; align-items: end; }
-    }
-    .label { display: block; font-size: .9rem; color: var(--muted); margin-bottom: 4px; }
-    .bar {
-      height: 16px; background: #083050; border-radius: 999px; overflow: hidden;
-      border: 1px solid rgba(122,240,228,.25);
-    }
-    .bar > span {
-      display: block; height: 100%; width: 0;
-      background: linear-gradient(90deg, var(--turq), var(--green));
-      transition: width .35s ease;
-    }
-    .best {
-      background: var(--navy-3);
-      border-radius: 12px;
-      padding: 8px 10px;
-      border: 1px solid rgba(61,204,122,.35);
-    }
-    .best strong { color: var(--green); }
-    .btn {
-      appearance: none;
-      border: 0;
-      border-radius: 12px;
-      min-height: 48px;
-      padding: 12px 14px;
-      background: var(--turq);
-      color: #042229;
-      font-weight: 700;
-      cursor: pointer;
-      touch-action: manipulation;
-    }
-    .btn:focus-visible, .nav-btn:focus-visible, .chip:focus-visible, .opt:focus-visible, .icon-btn:focus-visible {
-      outline: 3px solid var(--focus);
-      outline-offset: 2px;
-    }
-    .btn-ghost {
-      background: transparent;
-      color: var(--cream);
-      border: 2px solid rgba(242,251,255,.35);
-    }
-    .btn-danger { background: #8a2430; color: #fff; }
-    .btn-ok { background: var(--green); color: #05301a; }
-    .btn-wide { width: 100%; }
-    .row { display: flex; flex-wrap: wrap; gap: 8px; }
-    nav.app-nav {
-      position: fixed;
-      left: 0; right: 0; bottom: 0;
-      z-index: 10;
-      background: rgba(7,35,63,.96);
-      border-top: 1px solid rgba(46,196,182,.3);
-      padding: 8px 8px calc(8px + env(safe-area-inset-bottom));
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 6px;
-    }
-    @media (min-width: 760px) {
-      nav.app-nav { grid-template-columns: repeat(6, 1fr); }
-    }
-    .nav-btn {
-      min-height: 48px;
-      border: 0;
-      border-radius: 12px;
-      background: var(--navy-2);
-      color: var(--text);
-      font-weight: 650;
-      cursor: pointer;
-      touch-action: manipulation;
-    }
-    .nav-btn[aria-current="page"] {
-      background: var(--turq);
-      color: #042229;
-    }
-    .view { display: none; margin-top: 14px; }
-    .view.is-on { display: block; }
-    .card, .panel {
-      background: var(--card);
-      border: 1px solid rgba(46,196,182,.22);
-      border-radius: var(--radius);
-      padding: 14px;
-      margin: 0 0 12px;
-      box-shadow: var(--shadow);
-    }
-    h2 { font-size: 1.2rem; margin: 0 0 8px; }
-    h3 { font-size: 1.05rem; margin: 16px 0 8px; }
-    p { margin: 0 0 10px; }
-    ul, ol { margin: 0 0 10px; padding-left: 1.2rem; }
-    .muted { color: var(--muted); }
-    .pill {
-      display: inline-block;
-      background: rgba(46,196,182,.18);
-      color: #baf7f0;
-      border-radius: 999px;
-      padding: 4px 10px;
-      font-size: .9rem;
-      margin: 0 6px 6px 0;
-    }
-    .mission-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
-    .list-btn {
-      width: 100%;
-      text-align: left;
-      background: var(--navy-2);
-      color: var(--text);
-      border: 1px solid rgba(46,196,182,.2);
-      border-radius: 12px;
-      min-height: 52px;
-      padding: 10px 12px;
-      margin: 0 0 8px;
-      cursor: pointer;
-      touch-action: manipulation;
-    }
-    .list-btn small { display: block; color: var(--muted); font-weight: 500; }
-    .done { border-color: var(--green); }
-    .dot {
-      display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px;
-      background: #7a93a8;
-    }
-    .dot.ok { background: var(--green); }
-    .stoff-grid, .flag-grid, .kv-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-    }
-    @media (min-width: 640px) {
-      .stoff-grid, .flag-grid { grid-template-columns: 1fr 1fr; }
-    }
-    .mini {
-      background: #0a2d4e;
-      border-radius: 12px;
-      padding: 10px;
-      border: 1px solid rgba(255,255,255,.08);
-    }
-    .mini h4 { margin: 0 0 6px; font-size: 1rem; }
-    .flag {
-      width: 72px; height: 48px; border-radius: 4px;
-      border: 1px solid rgba(255,255,255,.35);
-      display: block; margin-bottom: 8px;
-      background: #ccc;
-    }
-    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 12px; }
-    .chip {
-      border: 0; border-radius: 999px; min-height: 42px; padding: 8px 12px;
-      background: var(--navy-2); color: var(--text); cursor: pointer;
-      touch-action: manipulation;
-    }
-    .chip[aria-pressed="true"] { background: var(--turq); color: #042229; font-weight: 700; }
-    .flash {
-      min-height: 220px;
-      width: 100%;
-      border: 0;
-      border-radius: 18px;
-      background: linear-gradient(160deg, #0f4b73, #0a6a62);
-      color: var(--cream);
-      padding: 18px;
-      text-align: center;
-      cursor: pointer;
-      touch-action: manipulation;
-      position: relative;
-    }
-    .flash-face { display: none; }
-    .flash-face.is-on { display: block; }
-    .flash-kicker { font-size: .9rem; color: #baf7f0; margin-bottom: 8px; }
-    .flash-text { font-size: 1.15rem; font-weight: 700; }
-    .flash-hint { margin-top: 16px; color: #d7fff8; font-weight: 500; }
-    .pager { display: flex; gap: 8px; margin-top: 10px; }
-    .pager .btn { flex: 1; }
-    .opt {
-      width: 100%;
-      text-align: left;
-      margin: 0 0 8px;
-      background: #0a2d4e;
-      color: var(--text);
-      border: 2px solid rgba(46,196,182,.28);
-      border-radius: 12px;
-      min-height: 48px;
-      padding: 12px;
-      cursor: pointer;
-      touch-action: manipulation;
-    }
-    .opt.is-right { background: #145c38; border-color: var(--green); }
-    .opt.is-wrong { background: #6d2430; border-color: var(--danger); }
-    .opt:disabled { cursor: default; opacity: 1; }
-    .feedback {
-      border-radius: 12px;
-      padding: 10px 12px;
-      margin: 8px 0;
-    }
-    .feedback.ok { background: #145c38; }
-    .feedback.bad { background: #6d2430; }
-    .hidden { display: none !important; }
-    .ampel span {
-      display: inline-block; min-width: 92px; text-align: center;
-      border-radius: 999px; padding: 6px 10px; margin: 0 6px 6px 0; font-weight: 700; color: #07233f;
-    }
-    .ampel .g { background: var(--green); }
-    .ampel .o { background: var(--warn); }
-    .ampel .r { background: #ff8a8a; }
-    .sr-only {
-      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
-      overflow: hidden; clip: rect(0,0,0,0); border: 0;
-    }
-    #print-sheet { display: none; }
-    @media print {
-      body { background: #fff; color: #111; }
-      .app { padding: 0; width: 100%; }
-      .top, .app-nav, .no-print, .view { display: none !important; }
-      #print-sheet { display: block !important; color: #111; }
-      #print-sheet h1, #print-sheet h2 { color: #07233f; }
+    :root{--navy:#07233f;--n2:#0c3258;--n3:#13416e;--tq:#2ec4b6;--gn:#3dcc7a;--tx:#f3fbff;--mu:#b7d0e0;--cd:#0e3a63;--fc:#7af0e4}
+    *{box-sizing:border-box}
+    html,body{margin:0;overflow-x:hidden}
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.45;color:var(--tx);background:radial-gradient(1200px 500px at 10% -10%,#156089 0,transparent 55%),radial-gradient(900px 400px at 110% 0,#0f6a5c 0,transparent 50%),var(--navy);min-height:100dvh}
+    button,select{font:inherit}
+    .skip{position:absolute;left:-999px}
+    .skip:focus{left:8px;top:8px;z-index:20;background:#f4fbf8;color:#07233f;padding:8px 12px;border-radius:8px}
+    .app{width:min(920px,100%);margin:0 auto;padding:12px 12px 118px}
+    .top{background:linear-gradient(180deg,rgba(14,58,99,.92),rgba(7,35,63,.88));border:1px solid rgba(46,196,182,.28);border-radius:16px;padding:14px;box-shadow:0 10px 30px rgba(0,0,0,.28)}
+    h1{font-size:1.35rem;margin:0 0 4px}
+    .sub,.muted{color:var(--mu)}
+    .sub{margin:0 0 12px}
+    .stats{display:grid;gap:10px}
+    @media(min-width:640px){.stats{grid-template-columns:1.4fr .8fr auto;align-items:end}}
+    .label{display:block;font-size:.9rem;color:var(--mu);margin-bottom:4px}
+    .bar{height:16px;background:#083050;border-radius:999px;overflow:hidden;border:1px solid rgba(122,240,228,.25)}
+    .bar>span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--tq),var(--gn));transition:width .35s}
+    .best{background:var(--n3);border-radius:12px;padding:8px 10px;border:1px solid rgba(61,204,122,.35)}
+    .best strong{color:var(--gn)}
+    .btn,.nav-btn,.chip,.opt,.list-btn,.flash{touch-action:manipulation;cursor:pointer}
+    .btn{appearance:none;border:0;border-radius:12px;min-height:48px;padding:12px 14px;background:var(--tq);color:#042229;font-weight:700}
+    .btn:focus-visible,.nav-btn:focus-visible,.chip:focus-visible,.opt:focus-visible,.list-btn:focus-visible,.flash:focus-visible{outline:3px solid var(--fc);outline-offset:2px}
+    .btn-ghost{background:transparent;color:#f4fbf8;border:2px solid rgba(242,251,255,.35)}
+    .btn-ok{background:var(--gn);color:#05301a}
+    .btn-wide{width:100%}
+    .row{display:flex;flex-wrap:wrap;gap:8px}
+    nav.app-nav{position:fixed;left:0;right:0;bottom:0;z-index:10;background:rgba(7,35,63,.96);border-top:1px solid rgba(46,196,182,.3);padding:8px 8px calc(8px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+    @media(min-width:760px){nav.app-nav{grid-template-columns:repeat(6,1fr)}}
+    .nav-btn{min-height:48px;border:0;border-radius:12px;background:var(--n2);color:var(--tx);font-weight:650}
+    .nav-btn[aria-current="page"]{background:var(--tq);color:#042229}
+    .view{display:none;margin-top:14px}
+    .view.is-on{display:block}
+    .card{background:var(--cd);border:1px solid rgba(46,196,182,.22);border-radius:16px;padding:14px;margin:0 0 12px;box-shadow:0 10px 30px rgba(0,0,0,.28)}
+    h2{font-size:1.2rem;margin:0 0 8px}
+    h3{font-size:1.05rem;margin:16px 0 8px}
+    p,ul,ol{margin:0 0 10px}
+    ul,ol{padding-left:1.2rem}
+    .pill{display:inline-block;background:rgba(46,196,182,.18);color:#baf7f0;border-radius:999px;padding:4px 10px;font-size:.9rem;margin:0 6px 6px 0}
+    .list-btn{width:100%;text-align:left;background:var(--n2);color:var(--tx);border:1px solid rgba(46,196,182,.2);border-radius:12px;min-height:52px;padding:10px 12px;margin:0 0 8px}
+    .list-btn small{display:block;color:var(--mu);font-weight:500}
+    .done{border-color:var(--gn)}
+    .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;background:#7a93a8}
+    .dot.ok{background:var(--gn)}
+    .grid{display:grid;gap:10px}
+    @media(min-width:640px){.grid-2{grid-template-columns:1fr 1fr}}
+    .mini{background:#0a2d4e;border-radius:12px;padding:10px;border:1px solid rgba(255,255,255,.08)}
+    .mini h4{margin:0 0 6px;font-size:1rem}
+    .flag{width:72px;height:48px;border-radius:4px;border:1px solid rgba(255,255,255,.35);margin-bottom:8px}
+    .chips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+    .chip{border:0;border-radius:999px;min-height:42px;padding:8px 12px;background:var(--n2);color:var(--tx)}
+    .chip[aria-pressed="true"]{background:var(--tq);color:#042229;font-weight:700}
+    .flash{min-height:220px;width:100%;border:0;border-radius:18px;background:linear-gradient(160deg,#0f4b73,#0a6a62);color:#f4fbf8;padding:18px;text-align:center}
+    .face{display:none}
+    .face.is-on{display:block}
+    .kicker{font-size:.9rem;color:#baf7f0;margin-bottom:8px}
+    .qtxt{font-size:1.15rem;font-weight:700}
+    .hint{margin-top:16px;color:#d7fff8}
+    .pager{display:flex;gap:8px;margin-top:10px}
+    .pager .btn{flex:1}
+    .opt{width:100%;text-align:left;margin:0 0 8px;background:#0a2d4e;color:var(--tx);border:2px solid rgba(46,196,182,.28);border-radius:12px;min-height:48px;padding:12px}
+    .opt.is-right{background:#145c38;border-color:var(--gn)}
+    .opt.is-wrong{background:#6d2430;border-color:#ff6b6b}
+    .opt:disabled{cursor:default}
+    .fb{border-radius:12px;padding:10px 12px;margin:8px 0}
+    .fb.ok{background:#145c38}
+    .fb.bad{background:#6d2430}
+    .hidden{display:none!important}
+    .ampel span{display:inline-block;min-width:92px;text-align:center;border-radius:999px;padding:6px 10px;margin:0 6px 6px 0;font-weight:700;color:#07233f}
+    .g{background:var(--gn)}.o{background:#ffc857}.r{background:#ff8a8a}
+    #print-sheet{display:none}
+    @media print{
+      body{background:#fff;color:#111}
+      .app{padding:0;width:100%}
+      .top,.app-nav,.no-print,.view{display:none!important}
+      #print-sheet{display:block!important;color:#111}
     }
   </style>
 </head>
@@ -289,21 +92,15 @@
       <p class="sub">7. Klasse · Test am 24.09.2026 · offline auf diesem Gerät</p>
       <div class="stats">
         <div>
-          <span class="label" id="progress-label">Lernplan-Fortschritt</span>
-          <div class="bar" role="progressbar" aria-labelledby="progress-label" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0" id="progress-bar">
-            <span id="progress-fill"></span>
-          </div>
-          <p class="muted" id="progress-text">0 von 10 Tagen erledigt</p>
+          <span class="label" id="plab">Lernplan-Fortschritt</span>
+          <div class="bar" role="progressbar" aria-labelledby="plab" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0" id="pbar"><span id="pfill"></span></div>
+          <p class="muted" id="ptext">0 von 10 Tagen erledigt</p>
         </div>
-        <div class="best" aria-live="polite">
-          <span class="label">Quiz-Bestwert</span>
-          <strong id="best-score">noch keiner</strong>
-        </div>
-        <button class="btn btn-ghost no-print" type="button" id="btn-reset">Fortschritt zurücksetzen</button>
+        <div class="best" aria-live="polite"><span class="label">Quiz-Bestwert</span><strong id="best">noch keiner</strong></div>
+        <button class="btn btn-ghost no-print" type="button" id="btnReset">Fortschritt zurücksetzen</button>
       </div>
     </header>
-
-    <nav class="app-nav" aria-label="Hauptnavigation">
+    <nav class="app-nav" aria-label="Hauptnavigation" id="nav">
       <button class="nav-btn" type="button" data-view="heute" aria-current="page">Heute</button>
       <button class="nav-btn" type="button" data-view="plan">Lernplan</button>
       <button class="nav-btn" type="button" data-view="stoff">Lernstoff</button>
@@ -311,7 +108,6 @@
       <button class="nav-btn" type="button" data-view="quiz">Quiz</button>
       <button class="nav-btn" type="button" data-view="eltern">Für Eltern</button>
     </nav>
-
     <main id="main">
       <section class="view is-on" id="view-heute" aria-labelledby="heute-title"></section>
       <section class="view" id="view-plan" aria-labelledby="plan-title"></section>
@@ -321,383 +117,305 @@
       <section class="view" id="view-eltern" aria-labelledby="eltern-title"></section>
     </main>
   </div>
-
   <div id="print-sheet"></div>
-
   <script>
-  (function () {
-    const KEY_PROG = "colinGeoProgress_v1";
-    const KEY_BEST = "colinGeoQuizBest_v1";
-    const KEY_MISS = "colinGeoMissed_v1";
-
-    const GEBIRGE = [
-      ["Schottisches Hochland", "Norden Grossbritanniens", "Ben Nevis", "1'345 m"],
-      ["Skandinavisches Gebirge", "Norwegen und Schweden", "Galdhøpiggen", "2'469 m"],
-      ["Kantabrisches Gebirge", "Norden Spaniens", "Torre de Cerredo", "2'648 m"],
-      ["Kastilisches Scheidegebirge", "Mitte Spaniens", "Pico Almanzor", "2'592 m"],
-      ["Iberisches Gebirge", "Nordosten/Mitte Spaniens", "Moncayo", "2'314 m"],
-      ["Betische Kordillere", "Süden Spaniens", "Mulhacén", "3'479 m"],
-      ["Pyrenäen", "zwischen Spanien und Frankreich", "Aneto", "3'404 m"],
-      ["Zentralmassiv", "Frankreich", "Puy de Sancy", "1'885 m"],
-      ["Alpen", "Mitteleuropa", "Mont Blanc", "ca. 4'806 m"],
-      ["Apenninen", "Italien", "Corno Grande", "2'912 m"],
-      ["Hohe Tatra", "Slowakei und Polen", "Gerlachovský štít", "2'655 m"],
-      ["Süd- und Ostkarpaten", "besonders Rumänien", "Moldoveanu", "2'544 m"],
-      ["Uralgebirge", "Osten Europas", "Narodnaja", "1'895 m"]
+  (function(){
+    var KP="colinGeoP1", KB="colinGeoB1";
+    var G=[["Schottisches Hochland","Norden Grossbritanniens","Ben Nevis","1'345 m"],["Skandinavisches Gebirge","Norwegen und Schweden","Galdhøpiggen","2'469 m"],["Kantabrisches Gebirge","Norden Spaniens","Torre de Cerredo","2'648 m"],["Kastilisches Scheidegebirge","Mitte Spaniens","Pico Almanzor","2'592 m"],["Iberisches Gebirge","Nordosten/Mitte Spaniens","Moncayo","2'314 m"],["Betische Kordillere","Süden Spaniens","Mulhacén","3'479 m"],["Pyrenäen","zwischen Spanien und Frankreich","Aneto","3'404 m"],["Zentralmassiv","Frankreich","Puy de Sancy","1'885 m"],["Alpen","Mitteleuropa","Mont Blanc","ca. 4'806 m"],["Apenninen","Italien","Corno Grande","2'912 m"],["Hohe Tatra","Slowakei und Polen","Gerlachovský štít","2'655 m"],["Süd- und Ostkarpaten","besonders Rumänien","Moldoveanu","2'544 m"],["Uralgebirge","Osten Europas","Narodnaja","1'895 m"]];
+    var F=[["Themse","Nordsee","Grossbritannien"],["Seine","Ärmelkanal","Frankreich"],["Loire","Atlantischer Ozean","Frankreich"],["Garonne","Atlantischer Ozean","Frankreich"],["Rhône","Mittelmeer","Schweiz und Frankreich"],["Douro","Atlantischer Ozean","Spanien und Portugal"],["Tajo/Tejo","Atlantischer Ozean","Spanien und Portugal"],["Guadalquivir","Atlantischer Ozean","Spanien"],["Ebro","Mittelmeer","Spanien"],["Po","Adriatisches Meer","Italien"],["Neckar","Rhein","Deutschland"],["Rhein","Nordsee","mehrere Länder"],["Weser","Nordsee","Deutschland"],["Elbe","Nordsee","Tschechien und Deutschland"],["Main","Rhein","Deutschland"],["Donau","Schwarzes Meer","mehrere Länder"],["Oder","Ostsee","Mitteleuropa"],["Weichsel","Ostsee","Polen"],["Dnjepr","Schwarzes Meer","Osteuropa"],["Don","Asowsches Meer","Russland"],["Wolga","Kaspisches Meer","Russland"]];
+    var RH=["Schweiz","Liechtenstein","Österreich","Deutschland","Frankreich","Niederlande"];
+    var DN=["Deutschland","Österreich","Slowakei","Ungarn","Kroatien","Serbien","Rumänien","Bulgarien","Moldawien","Ukraine"];
+    var DC=["Wien","Bratislava","Budapest","Belgrad"];
+    var SP=[["Deutsch","Deutschland, Österreich, Schweiz, Liechtenstein, Luxemburg und Belgien"],["Englisch","Grossbritannien, Irland und Malta"],["Französisch","Frankreich, Belgien, Schweiz, Luxemburg und Monaco"],["Italienisch","Italien, Schweiz, San Marino und Vatikanstadt"],["Russisch","Russland und Belarus"]];
+    var CHS=["Deutsch","Französisch","Italienisch","Rätoromanisch"];
+    var FG=[["Grossbritannien","Blaues Tuch mit weissem und rotem Kreuz (Union Jack)","linear-gradient(135deg,#012169 40%,#c8102e 40% 45%,#012169 45%)"],["Deutschland","Schwarz, Rot und Gold quer","linear-gradient(#000 33.3%,#dd0000 33.3% 66.6%,#ffcc00 66.6%)"],["Norwegen","Rot mit blauem Kreuz und weissem Rand","#ba0c2f"],["Schweden","Blau mit gelbem Kreuz","#006aa7"],["Finnland","Weiss mit blauem Kreuz","#fff"],["Russland","Weiss, Blau und Rot quer","linear-gradient(#fff 33.3%,#0039a6 33.3% 66.6%,#d52b1e 66.6%)"],["Irland","Grün, Weiss und Orange senkrecht","linear-gradient(90deg,#169b62 33.3%,#fff 33.3% 66.6%,#ff883e 66.6%)"],["Niederlande","Rot, Weiss und Blau quer","linear-gradient(#ae1c28 33.3%,#fff 33.3% 66.6%,#21468b 66.6%)"],["Belgien","Schwarz, Gelb und Rot senkrecht","linear-gradient(90deg,#000 33.3%,#fada4a 33.3% 66.6%,#ef3340 66.6%)"],["Frankreich","Blau, Weiss und Rot senkrecht","linear-gradient(90deg,#002395 33.3%,#fff 33.3% 66.6%,#ed2939 66.6%)"],["Portugal","Grün und Rot senkrecht, mit Wappen","linear-gradient(90deg,#006600 40%,#ff0000 40%)"],["Spanien","Rot, Gelb, Rot quer","linear-gradient(#aa151b 25%,#f1bf00 25% 75%,#aa151b 75%)"],["Schweiz","Rot mit weissem Kreuz","#ff0000"],["Österreich","Rot, Weiss, Rot quer","linear-gradient(#ed2939 33.3%,#fff 33.3% 66.6%,#ed2939 66.6%)"],["Ungarn","Rot, Weiss, Grün quer","linear-gradient(#ce2939 33.3%,#fff 33.3% 66.6%,#477050 66.6%)"],["Italien","Grün, Weiss, Rot senkrecht","linear-gradient(90deg,#009246 33.3%,#fff 33.3% 66.6%,#ce2b37 66.6%)"],["Polen","Weiss und Rot quer","linear-gradient(#fff 50%,#dc143c 50%)"],["Ukraine","Blau und Gelb quer","linear-gradient(#005bbb 50%,#ffd500 50%)"],["Rumänien","Blau, Gelb, Rot senkrecht","linear-gradient(90deg,#002b7f 33.3%,#fcd116 33.3% 66.6%,#ce1126 66.6%)"],["Serbien","Rot, Blau, Weiss quer","linear-gradient(#c6363c 33.3%,#0c4076 33.3% 66.6%,#fff 66.6%)"],["Bulgarien","Weiss, Grün, Rot quer","linear-gradient(#fff 33.3%,#00966e 33.3% 66.6%,#d62612 66.6%)"],["Griechenland","Blau-weisse Streifen und weisses Kreuz","repeating-linear-gradient(#0d5eaf,#0d5eaf 6px,#fff 6px 12px)"]];
+    var KZ=[["A","Österreich"],["CH","Schweiz"],["P","Portugal"],["PL","Polen"],["DK","Dänemark"],["FL","Liechtenstein"],["E","Spanien"],["N","Norwegen"],["NL","Niederlande"],["B","Belgien"],["S","Schweden"],["RUS","Russland"],["D","Deutschland"],["F","Frankreich"],["I","Italien"],["CZ","Tschechien"],["H","Ungarn"]];
+    var MK=[["Deutschland","VW, Porsche, Mercedes-Benz, BMW, Opel, Audi"],["Grossbritannien","Rover, Rolls-Royce, Jaguar"],["Schweden","Saab, Volvo"],["Italien","Alfa Romeo, Fiat, Ferrari, Lancia"],["Frankreich","Renault, Peugeot, Citroën"],["Spanien","Seat"],["Russland","Lada"],["Tschechien","Škoda"],["Rumänien","Dacia"]];
+    var WZ=[["Tower Bridge","London","Grossbritannien"],["Atomium","Brüssel","Belgien"],["Brandenburger Tor","Berlin","Deutschland"],["Basilius-Kathedrale","Moskau","Russland"],["Eiffelturm","Paris","Frankreich"],["Kolosseum","Rom","Italien"],["Akropolis","Athen","Griechenland"],["Stephansdom","Wien","Österreich"]];
+    var EU=["Belgien","Bulgarien","Dänemark","Deutschland","Estland","Finnland","Frankreich","Griechenland","Irland","Italien","Kroatien","Lettland","Litauen","Luxemburg","Malta","Niederlande","Österreich","Polen","Portugal","Rumänien","Schweden","Slowakei","Slowenien","Spanien","Tschechien","Ungarn","Zypern"];
+    var NEU=["Schweiz","Liechtenstein","Norwegen","Island","Grossbritannien","Russland","Ukraine","Serbien"];
+    var FR=[["Freier Personenverkehr","EU-Bürger dürfen in anderen EU-Ländern leben und arbeiten."],["Freier Warenverkehr","Waren können innerhalb der EU grundsätzlich ohne Binnenzölle verkauft werden."],["Freier Dienstleistungsverkehr","Unternehmen dürfen Dienstleistungen in anderen EU-Ländern anbieten."],["Freier Kapitalverkehr","Geld kann zwischen EU-Ländern übertragen und investiert werden."]];
+    var EURO=["Österreich","Belgien","Bulgarien","Kroatien","Zypern","Estland","Finnland","Frankreich","Deutschland","Griechenland","Irland","Italien","Lettland","Litauen","Luxemburg","Malta","Niederlande","Portugal","Slowakei","Slowenien","Spanien"];
+    var EOE=["Dänemark","Polen","Rumänien","Schweden","Tschechien","Ungarn"];
+    var EAX=["Andorra","Monaco","San Marino","Vatikanstadt","Kosovo","Montenegro"];
+    var G6=["Russland","Ukraine","Frankreich","Spanien","Schweden","Deutschland"];
+    var K6=["Vatikanstadt","Monaco","San Marino","Liechtenstein","Malta","Andorra"];
+    var B5=["Russland","Deutschland","Frankreich","Grossbritannien","Italien"];
+    var KR=["Dänische Krone","Isländische Krone","Norwegische Krone","Schwedische Krone","Tschechische Krone"];
+    var RG=[["Nordeuropa","Island, Norwegen, Schweden, Finnland, Dänemark"],["Westeuropa","Frankreich, Niederlande, Belgien, Grossbritannien, Irland, Andorra"],["Mitteleuropa","Schweiz, Liechtenstein, Deutschland, Österreich, Luxemburg, Polen, Tschechien, Slowakei, Ungarn, Slowenien, Kroatien, Estland, Lettland, Litauen"],["Südeuropa","Portugal, Spanien, Italien, Malta, Monaco, San Marino, Vatikanstadt"],["Südosteuropa","Albanien, Bosnien und Herzegowina, Bulgarien, Griechenland, Kosovo, Moldawien, Montenegro, Nordmazedonien, Rumänien, Serbien, Zypern"],["Osteuropa","Russland, Belarus, Ukraine"]];
+    var DAYS=[
+      {id:"2026-09-15",d:"15.09.2026",t:"Gebirge Europas",m:"35 Minuten",g:["Die wichtigsten Gebirge mit Lage nennen.","Den höchsten Berg jedes Gebirges merken.","Mont Blanc als höchsten Berg im Dossier sicher können."],k:"gebirge"},
+      {id:"2026-09-16",d:"16.09.2026",t:"Flüsse Europas",m:"35 Minuten",g:["Mündung und Land der Flüsse zuordnen.","Rheinländer und Donauländer aufsagen.","Donau-Hauptstädte nennen."],k:"fluesse"},
+      {id:"2026-09-17",d:"17.09.2026",t:"Sprachen und Flaggen",m:"35 Minuten",g:["Wichtige Sprachen den Ländern zuordnen.","Schweizer Amtssprachen sicher können.","Flaggenfarben und die Umriss-Besonderheit kennen."],k:"sprachen"},
+      {id:"2026-09-18",d:"18.09.2026",t:"Kennzeichen, Marken, Wahrzeichen",m:"35 Minuten",g:["Autokennzeichen den Ländern zuordnen.","Automarken dem Herkunftsland zuordnen.","Wahrzeichen mit Stadt und Land nennen."],k:"zeichen"},
+      {id:"2026-09-19",d:"19.09.2026",t:"EU und Euro",m:"35 Minuten",g:["EU-Mitglieder 2026 von Nicht-EU unterscheiden.","Euro-Länder, EU ohne Euro und Euro ausserhalb der EU trennen.","Kroatien 2023 und Bulgarien 2026 als Euro-Länder merken."],k:"eu"},
+      {id:"2026-09-20",d:"20.09.2026",t:"Vier Freiheiten der EU",m:"35 Minuten",g:["Die vier Freiheiten namentlich können.","Jede Freiheit in einem Satz erklären.","Den Merksatz Menschen, Waren, Arbeiten, Geld nutzen."],k:"frei"},
+      {id:"2026-09-21",d:"21.09.2026",t:"Europa in Zahlen und Regionen",m:"35 Minuten",g:["Grösste, kleinste und bevölkerungsreichste Länder nennen.","Franken- und Kronen-Länder kennen.","Die sechs Regionen mit Beispiel-Ländern zuordnen."],k:"zahlen"},
+      {id:"2026-09-22",d:"22.09.2026",t:"Probeprüfung",m:"40 Minuten",g:["Ein volles Quiz unter Testbedingungen lösen.","Unsichere Themen markieren.","Danach nur Fehler vertiefen."],k:"probe"},
+      {id:"2026-09-23",d:"23.09.2026",t:"Fehlertraining",m:"35 Minuten",g:["Falsche Quizfragen nochmals üben.","Rote Karten mündlich erklären.","Keine neuen Themen mehr beginnen."],k:"fehler"},
+      {id:"2026-09-24",d:"24.09.2026",t:"Testtag",m:"höchstens 10 Minuten",g:["Nur das Wichtigste wiederholen.","Ruhig bleiben und Merksätze nutzen.","Nicht mehr pauken, sondern abrufen."],k:"test"}
     ];
-
-    const FLUESSE = [
-      ["Themse", "Nordsee", "Grossbritannien"],
-      ["Seine", "Ärmelkanal", "Frankreich"],
-      ["Loire", "Atlantischer Ozean", "Frankreich"],
-      ["Garonne", "Atlantischer Ozean", "Frankreich"],
-      ["Rhône", "Mittelmeer", "Schweiz und Frankreich"],
-      ["Douro", "Atlantischer Ozean", "Spanien und Portugal"],
-      ["Tajo/Tejo", "Atlantischer Ozean", "Spanien und Portugal"],
-      ["Guadalquivir", "Atlantischer Ozean", "Spanien"],
-      ["Ebro", "Mittelmeer", "Spanien"],
-      ["Po", "Adriatisches Meer", "Italien"],
-      ["Neckar", "Rhein", "Deutschland"],
-      ["Rhein", "Nordsee", "mehrere Länder"],
-      ["Weser", "Nordsee", "Deutschland"],
-      ["Elbe", "Nordsee", "Tschechien und Deutschland"],
-      ["Main", "Rhein", "Deutschland"],
-      ["Donau", "Schwarzes Meer", "mehrere Länder"],
-      ["Oder", "Ostsee", "Mitteleuropa"],
-      ["Weichsel", "Ostsee", "Polen"],
-      ["Dnjepr", "Schwarzes Meer", "Osteuropa"],
-      ["Don", "Asowsches Meer", "Russland"],
-      ["Wolga", "Kaspisches Meer", "Russland"]
-    ];
-
-    const RHEIN = ["Schweiz", "Liechtenstein", "Österreich", "Deutschland", "Frankreich", "Niederlande"];
-    const DONAU = ["Deutschland", "Österreich", "Slowakei", "Ungarn", "Kroatien", "Serbien", "Rumänien", "Bulgarien", "Moldawien", "Ukraine"];
-    const DONAU_CAP = ["Wien", "Bratislava", "Budapest", "Belgrad"];
-
-    const SPRACHEN = [
-      ["Deutsch", "Deutschland, Österreich, Schweiz, Liechtenstein, Luxemburg und Belgien"],
-      ["Englisch", "Grossbritannien, Irland und Malta"],
-      ["Französisch", "Frankreich, Belgien, Schweiz, Luxemburg und Monaco"],
-      ["Italienisch", "Italien, Schweiz, San Marino und Vatikanstadt"],
-      ["Russisch", "Russland und Belarus"]
-    ];
-    const CH_SPR = ["Deutsch", "Französisch", "Italienisch", "Rätoromanisch"];
-
-    const FLAGGEN = [
-      ["Grossbritannien", "Blaues Tuch mit weissem und rotem Kreuz, Union Jack", "linear-gradient(45deg,#012169 25%,#c8102e 25% 30%,#012169 30% 70%,#c8102e 70% 75%,#012169 75%)"],
-      ["Deutschland", "Schwarz, Rot und Gold quer", "linear-gradient(#000 33.33%,#dd0000 33.33% 66.66%,#ffcc00 66.66%)"],
-      ["Norwegen", "Rot mit blauem Kreuz und weissem Rand", "linear-gradient(#ba0c2f,#ba0c2f)"],
-      ["Schweden", "Blau mit gelbem Kreuz", "linear-gradient(#006aa7,#006aa7)"],
-      ["Finnland", "Weiss mit blauem Kreuz", "linear-gradient(#fff,#fff)"],
-      ["Russland", "Weiss, Blau und Rot quer", "linear-gradient(#fff 33.33%,#0039a6 33.33% 66.66%,#d52b1e 66.66%)"],
-      ["Irland", "Grün, Weiss und Orange senkrecht", "linear-gradient(90deg,#169b62 33.33%,#fff 33.33% 66.66%,#ff883e 66.66%)"],
-      ["Niederlande", "Rot, Weiss und Blau quer", "linear-gradient(#ae1c28 33.33%,#fff 33.33% 66.66%,#21468b 66.66%)"],
-      ["Belgien", "Schwarz, Gelb und Rot senkrecht", "linear-gradient(90deg,#000 33.33%,#fada4a 33.33% 66.66%,#ef3340 66.66%)"],
-      ["Frankreich", "Blau, Weiss und Rot senkrecht", "linear-gradient(90deg,#002395 33.33%,#fff 33.33% 66.66%,#ed2939 66.66%)"],
-      ["Portugal", "Grün und Rot senkrecht, mit Wappen", "linear-gradient(90deg,#006600 40%,#ff0000 40%)"],
-      ["Spanien", "Rot, Gelb, Rot quer, mit Wappen", "linear-gradient(#aa151b 25%,#f1bf00 25% 75%,#aa151b 75%)"],
-      ["Schweiz", "Rot mit weissem Kreuz", "#ff0000"],
-      ["Österreich", "Rot, Weiss, Rot quer", "linear-gradient(#ed2939 33.33%,#fff 33.33% 66.66%,#ed2939 66.66%)"],
-      ["Ungarn", "Rot, Weiss, Grün quer", "linear-gradient(#ce2939 33.33%,#fff 33.33% 66.66%,#477050 66.66%)"],
-      ["Italien", "Grün, Weiss, Rot senkrecht", "linear-gradient(90deg,#009246 33.33%,#fff 33.33% 66.66%,#ce2b37 66.66%)"],
-      ["Polen", "Weiss und Rot quer", "linear-gradient(#fff 50%,#dc143c 50%)"],
-      ["Ukraine", "Blau und Gelb quer", "linear-gradient(#005bbb 50%,#ffd500 50%)"],
-      ["Rumänien", "Blau, Gelb, Rot senkrecht", "linear-gradient(90deg,#002b7f 33.33%,#fcd116 33.33% 66.66%,#ce1126 66.66%)"],
-      ["Serbien", "Rot, Blau, Weiss quer", "linear-gradient(#c6363c 33.33%,#0c4076 33.33% 66.66%,#fff 66.66%)"],
-      ["Bulgarien", "Weiss, Grün, Rot quer", "linear-gradient(#fff 33.33%,#00966e 33.33% 66.66%,#d62612 66.66%)"],
-      ["Griechenland", "Blau-weisse Streifen und weisses Kreuz", "repeating-linear-gradient(#0d5eaf 0 5.3px,#fff 5.3px 10.6px)"]
-    ];
-
-    const KZ = [
-      ["A", "Österreich"], ["CH", "Schweiz"], ["P", "Portugal"], ["PL", "Polen"],
-      ["DK", "Dänemark"], ["FL", "Liechtenstein"], ["E", "Spanien"], ["N", "Norwegen"],
-      ["NL", "Niederlande"], ["B", "Belgien"], ["S", "Schweden"], ["RUS", "Russland"],
-      ["D", "Deutschland"], ["F", "Frankreich"], ["I", "Italien"], ["CZ", "Tschechien"], ["H", "Ungarn"]
-    ];
-
-    const MARKEN = [
-      ["Deutschland", "VW, Porsche, Mercedes-Benz, BMW, Opel, Audi"],
-      ["Grossbritannien", "Rover, Rolls-Royce, Jaguar"],
-      ["Schweden", "Saab, Volvo"],
-      ["Italien", "Alfa Romeo, Fiat, Ferrari, Lancia"],
-      ["Frankreich", "Renault, Peugeot, Citroën"],
-      ["Spanien", "Seat"],
-      ["Russland", "Lada"],
-      ["Tschechien", "Škoda"],
-      ["Rumänien", "Dacia"]
-    ];
-
-    const ZEICHEN = [
-      ["Tower Bridge", "London", "Grossbritannien"],
-      ["Atomium", "Brüssel", "Belgien"],
-      ["Brandenburger Tor", "Berlin", "Deutschland"],
-      ["Basilius-Kathedrale", "Moskau", "Russland"],
-      ["Eiffelturm", "Paris", "Frankreich"],
-      ["Kolosseum", "Rom", "Italien"],
-      ["Akropolis", "Athen", "Griechenland"],
-      ["Stephansdom", "Wien", "Österreich"]
-    ];
-
-    const EU = ["Belgien","Bulgarien","Dänemark","Deutschland","Estland","Finnland","Frankreich","Griechenland","Irland","Italien","Kroatien","Lettland","Litauen","Luxemburg","Malta","Niederlande","Österreich","Polen","Portugal","Rumänien","Schweden","Slowakei","Slowenien","Spanien","Tschechien","Ungarn","Zypern"];
-    const NICHT_EU = ["Schweiz","Liechtenstein","Norwegen","Island","Grossbritannien","Russland","Ukraine","Serbien"];
-    const FREI = [
-      ["Freier Personenverkehr", "EU-Bürger dürfen in anderen EU-Ländern leben und arbeiten."],
-      ["Freier Warenverkehr", "Waren können innerhalb der EU grundsätzlich ohne Binnenzölle verkauft werden."],
-      ["Freier Dienstleistungsverkehr", "Unternehmen dürfen Dienstleistungen in anderen EU-Ländern anbieten."],
-      ["Freier Kapitalverkehr", "Geld kann zwischen EU-Ländern übertragen und investiert werden."]
-    ];
-    const EURO = ["Österreich","Belgien","Bulgarien","Kroatien","Zypern","Estland","Finnland","Frankreich","Deutschland","Griechenland","Irland","Italien","Lettland","Litauen","Luxemburg","Malta","Niederlande","Portugal","Slowakei","Slowenien","Spanien"];
-    const EU_OHNE_EURO = ["Dänemark","Polen","Rumänien","Schweden","Tschechien","Ungarn"];
-    const EURO_AUSSEN = ["Andorra","Monaco","San Marino","Vatikanstadt","Kosovo","Montenegro"];
-    const GROSS6 = ["Russland","Ukraine","Frankreich","Spanien","Schweden","Deutschland"];
-    const KLEIN6 = ["Vatikanstadt","Monaco","San Marino","Liechtenstein","Malta","Andorra"];
-    const BEV5 = ["Russland","Deutschland","Frankreich","Grossbritannien","Italien"];
-    const CHF = ["Schweiz","Liechtenstein"];
-    const KRONE = ["Dänische Krone","Isländische Krone","Norwegische Krone","Schwedische Krone","Tschechische Krone"];
-    const REG = [
-      ["Nordeuropa", "Island, Norwegen, Schweden, Finnland, Dänemark"],
-      ["Westeuropa", "Frankreich, Niederlande, Belgien, Grossbritannien, Irland, Andorra"],
-      ["Mitteleuropa", "Schweiz, Liechtenstein, Deutschland, Österreich, Luxemburg, Polen, Tschechien, Slowakei, Ungarn, Slowenien, Kroatien, Estland, Lettland, Litauen"],
-      ["Südeuropa", "Portugal, Spanien, Italien, Malta, Monaco, San Marino, Vatikanstadt"],
-      ["Südosteuropa", "Albanien, Bosnien und Herzegowina, Bulgarien, Griechenland, Kosovo, Moldawien, Montenegro, Nordmazedonien, Rumänien, Serbien, Zypern"],
-      ["Osteuropa", "Russland, Belarus, Ukraine"]
-    ];
-
-    const DAYS = [
-      {id:"2026-09-15", date:"15.09.2026", title:"Gebirge Europas", min:"35 Minuten", goals:["Die wichtigsten Gebirge mit Lage nennen.","Den höchsten Berg jedes Gebirges merken.","Mont Blanc als höchsten Berg im Dossier sicher können."], topic:"gebirge"},
-      {id:"2026-09-16", date:"16.09.2026", title:"Flüsse Europas", min:"35 Minuten", goals:["Mündung und Land der Flüsse zuordnen.","Rheinländer und Donauländer aufsagen.","Donau-Hauptstädte nennen."], topic:"fluesse"},
-      {id:"2026-09-17", date:"17.09.2026", title:"Sprachen und Flaggen", min:"35 Minuten", goals:["Wichtige Sprachen den Ländern zuordnen.","Schweizer Amtssprachen sicher können.","Flaggenfarben und die Umriss-Besonderheit kennen."], topic:"sprachen"},
-      {id:"2026-09-18", date:"18.09.2026", title:"Kennzeichen, Marken, Wahrzeichen", min:"35 Minuten", goals:["Autokennzeichen den Ländern zuordnen.","Automarken dem Herkunftsland zuordnen.","Wahrzeichen mit Stadt und Land nennen."], topic:"zeichen"},
-      {id:"2026-09-19", date:"19.09.2026", title:"EU und Euro", min:"35 Minuten", goals:["EU-Mitglieder 2026 von Nicht-EU unterscheiden.","Euro-Länder, EU ohne Euro und Euro ausserhalb der EU trennen.","Kroatien 2023 und Bulgarien 2026 als Euro-Länder merken."], topic:"eu"},
-      {id:"2026-09-20", date:"20.09.2026", title:"Vier Freiheiten der EU", min:"35 Minuten", goals:["Die vier Freiheiten namentlich können.","Jede Freiheit in einem Satz erklären.","Den Merksatz Menschen, Waren, Arbeiten, Geld nutzen."], topic:"frei"},
-      {id:"2026-09-21", date:"21.09.2026", title:"Europa in Zahlen und Regionen", min:"35 Minuten", goals:["Grösste, kleinste und bevölkerungsreichste Länder nennen.","Franken- und Kronen-Länder kennen.","Die sechs Regionen mit Beispiel-Ländern zuordnen."], topic:"zahlen"},
-      {id:"2026-09-22", date:"22.09.2026", title:"Probeprüfung", min:"40 Minuten", goals:["Ein volles Quiz unter Testbedingungen lösen.","Unsichere Themen markieren.","Danach nur Fehler vertiefen."], topic:"probe"},
-      {id:"2026-09-23", date:"23.09.2026", title:"Fehlertraining", min:"35 Minuten", goals:["Falsche Quizfragen nochmals üben.","Rote Karten mündlich erklären.","Keine neuen Themen mehr beginnen."], topic:"fehler"},
-      {id:"2026-09-24", date:"24.09.2026", title:"Testtag", min:"höchstens 10 Minuten", goals:["Nur das Wichtigste wiederholen.","Ruhig bleiben und Merksätze nutzen.","Nicht mehr pauken, sondern abrufen."], topic:"test"}
-    ];
-
-    const CATS = [
-      ["alle", "Alle"],
-      ["gebirge", "Gebirge"],
-      ["fluesse", "Flüsse"],
-      ["sprachen", "Sprachen"],
-      ["flaggen", "Flaggen"],
-      ["kennzeichen", "Kennzeichen"],
-      ["automarken", "Automarken"],
-      ["wahrzeichen", "Wahrzeichen"],
-      ["eu", "EU und Euro"],
-      ["frei", "EU-Freiheiten"],
-      ["zahlen", "Zahlen und Regionen"]
-    ];
-
-    function cardsAll() {
-      const out = [];
-      GEBIRGE.forEach(function (g) {
-        out.push({cat:"gebirge", q:"Wo liegt " + g[0] + "?", a:g[1]});
-        out.push({cat:"gebirge", q:"Höchster Berg im Gebirge " + g[0] + "?", a:g[2] + ", " + g[3]});
-      });
-      out.push({cat:"gebirge", q:"Welcher Berg gilt im Dossier als höchster Berg Europas?", a:"Mont Blanc, ca. 4'806 m. Elbrus zählt nur, wenn der Kaukasus zu Europa gerechnet wird."});
-      FLUESSE.forEach(function (f) {
-        out.push({cat:"fluesse", q:"Wohin mündet die/der " + f[0] + "?", a:f[1] + (f[2] !== "mehrere Länder" ? " (" + f[2] + ")" : "")});
-      });
-      out.push({cat:"fluesse", q:"Welche Länder sind Rheinländer?", a:RHEIN.join(", ")});
-      out.push({cat:"fluesse", q:"Welche Länder sind Donauländer?", a:DONAU.join(", ")});
-      out.push({cat:"fluesse", q:"Welche Hauptstädte liegen an der Donau?", a:DONAU_CAP.join(", ")});
-      SPRACHEN.forEach(function (s) {
-        out.push({cat:"sprachen", q:"Wo ist " + s[0] + " Amtssprache?", a:s[1]});
-      });
-      out.push({cat:"sprachen", q:"Welche Amtssprachen hat die Schweiz?", a:CH_SPR.join(", ")});
-      FLAGGEN.forEach(function (f) {
-        out.push({cat:"flaggen", q:"Wie sieht die Flagge von " + f[0] + " aus?", a:f[1]});
-      });
-      out.push({cat:"flaggen", q:"Welche Flaggen zeigen den Umriss des Landes?", a:"Kosovo und Zypern"});
-      KZ.forEach(function (k) {
-        out.push({cat:"kennzeichen", q:"Welches Land hat das Autokennzeichen " + k[0] + "?", a:k[1]});
-        out.push({cat:"kennzeichen", q:"Autokennzeichen von " + k[1] + "?", a:k[0]});
-      });
-      MARKEN.forEach(function (m) {
-        out.push({cat:"automarken", q:"Welche Automarken kommen aus " + m[0] + "?", a:m[1]});
-      });
-      [["Volvo","Schweden"],["Seat","Spanien"],["Škoda","Tschechien"],["Dacia","Rumänien"],["Ferrari","Italien"],["Jaguar","Grossbritannien"],["Lada","Russland"]].forEach(function (m) {
-        out.push({cat:"automarken", q:"Aus welchem Land kommt " + m[0] + "?", a:m[1]});
-      });
-      ZEICHEN.forEach(function (z) {
-        out.push({cat:"wahrzeichen", q:"Wo steht " + z[0] + "?", a:z[1] + ", " + z[2]});
-      });
-      out.push({cat:"eu", q:"Nenne Länder, die 2026 nicht in der EU sind.", a:NICHT_EU.join(", ")});
-      out.push({cat:"eu", q:"Ist die Schweiz in der EU?", a:"Nein"});
-      out.push({cat:"eu", q:"Welche EU-Länder haben 2026 den Euro nicht?", a:EU_OHNE_EURO.join(", ")});
-      out.push({cat:"eu", q:"Welche Länder nutzen den Euro, sind aber nicht in der EU?", a:EURO_AUSSEN.join(", ")});
-      out.push({cat:"eu", q:"Seit wann hat Kroatien den Euro?", a:"seit 2023"});
-      out.push({cat:"eu", q:"Seit wann hat Bulgarien den Euro?", a:"seit 2026"});
-      FREI.forEach(function (f) {
-        out.push({cat:"frei", q:"Was bedeutet: " + f[0] + "?", a:f[1]});
-      });
-      out.push({cat:"frei", q:"Merksatz der vier Freiheiten?", a:"Menschen, Waren, Arbeiten, Geld"});
-      out.push({cat:"zahlen", q:"Welches sind die sechs grössten Länder Europas laut Dossier?", a:GROSS6.join(", ")});
-      out.push({cat:"zahlen", q:"Welches sind die sechs kleinsten Länder Europas laut Dossier?", a:KLEIN6.join(", ")});
-      out.push({cat:"zahlen", q:"Welches sind die fünf bevölkerungsreichsten Länder laut Dossier?", a:BEV5.join(", ")});
-      out.push({cat:"zahlen", q:"Welche Länder nutzen den Schweizer Franken?", a:CHF.join(" und ")});
-      out.push({cat:"zahlen", q:"Welche Währungen heissen Krone?", a:KRONE.join(", ")});
-      REG.forEach(function (r) {
-        out.push({cat:"zahlen", q:"Welche Länder gehören zu " + r[0] + " laut Dossier?", a:r[1]});
-      });
-      return out;
+    var CATS=[["alle","Alle"],["gebirge","Gebirge"],["fluesse","Flüsse"],["sprachen","Sprachen"],["flaggen","Flaggen"],["kennzeichen","Kennzeichen"],["automarken","Automarken"],["wahrzeichen","Wahrzeichen"],["eu","EU und Euro"],["frei","EU-Freiheiten"],["zahlen","Zahlen und Regionen"]];
+    function cards(){
+      var o=[];
+      G.forEach(function(g){o.push({c:"gebirge",q:"Wo liegt "+g[0]+"?",a:g[1]});o.push({c:"gebirge",q:"Höchster Berg im Gebirge "+g[0]+"?",a:g[2]+", "+g[3]});});
+      o.push({c:"gebirge",q:"Welcher Berg gilt im Dossier als höchster Berg Europas?",a:"Mont Blanc, ca. 4'806 m. Elbrus zählt nur, wenn der Kaukasus zu Europa gerechnet wird."});
+      F.forEach(function(f){o.push({c:"fluesse",q:"Wohin mündet die/der "+f[0]+"?",a:f[1]+(f[2]!=="mehrere Länder"?" ("+f[2]+")":"")});});
+      o.push({c:"fluesse",q:"Welche Länder sind Rheinländer?",a:RH.join(", ")});
+      o.push({c:"fluesse",q:"Welche Länder sind Donauländer?",a:DN.join(", ")});
+      o.push({c:"fluesse",q:"Welche Hauptstädte liegen an der Donau?",a:DC.join(", ")});
+      SP.forEach(function(s){o.push({c:"sprachen",q:"Wo ist "+s[0]+" Amtssprache?",a:s[1]});});
+      o.push({c:"sprachen",q:"Welche Amtssprachen hat die Schweiz?",a:CHS.join(", ")});
+      FG.forEach(function(f){o.push({c:"flaggen",q:"Wie sieht die Flagge von "+f[0]+" aus?",a:f[1]});});
+      o.push({c:"flaggen",q:"Welche Flaggen zeigen den Umriss des Landes?",a:"Kosovo und Zypern"});
+      KZ.forEach(function(k){o.push({c:"kennzeichen",q:"Welches Land hat das Autokennzeichen "+k[0]+"?",a:k[1]});o.push({c:"kennzeichen",q:"Autokennzeichen von "+k[1]+"?",a:k[0]});});
+      MK.forEach(function(m){o.push({c:"automarken",q:"Welche Automarken kommen aus "+m[0]+"?",a:m[1]});});
+      [["Volvo","Schweden"],["Seat","Spanien"],["Škoda","Tschechien"],["Dacia","Rumänien"],["Ferrari","Italien"],["Jaguar","Grossbritannien"],["Lada","Russland"]].forEach(function(m){o.push({c:"automarken",q:"Aus welchem Land kommt "+m[0]+"?",a:m[1]});});
+      WZ.forEach(function(z){o.push({c:"wahrzeichen",q:"Wo steht "+z[0]+"?",a:z[1]+", "+z[2]});});
+      o.push({c:"eu",q:"Nenne Länder, die 2026 nicht in der EU sind.",a:NEU.join(", ")});
+      o.push({c:"eu",q:"Ist die Schweiz in der EU?",a:"Nein"});
+      o.push({c:"eu",q:"Welche EU-Länder haben 2026 den Euro nicht?",a:EOE.join(", ")});
+      o.push({c:"eu",q:"Welche Länder nutzen den Euro, sind aber nicht in der EU?",a:EAX.join(", ")});
+      o.push({c:"eu",q:"Seit wann hat Kroatien den Euro?",a:"seit 2023"});
+      o.push({c:"eu",q:"Seit wann hat Bulgarien den Euro?",a:"seit 2026"});
+      FR.forEach(function(f){o.push({c:"frei",q:"Was bedeutet: "+f[0]+"?",a:f[1]});});
+      o.push({c:"frei",q:"Merksatz der vier Freiheiten?",a:"Menschen, Waren, Arbeiten, Geld"});
+      o.push({c:"zahlen",q:"Welches sind die sechs grössten Länder Europas laut Dossier?",a:G6.join(", ")});
+      o.push({c:"zahlen",q:"Welches sind die sechs kleinsten Länder Europas laut Dossier?",a:K6.join(", ")});
+      o.push({c:"zahlen",q:"Welches sind die fünf bevölkerungsreichsten Länder laut Dossier?",a:B5.join(", ")});
+      o.push({c:"zahlen",q:"Welche Länder nutzen den Schweizer Franken?",a:"Schweiz und Liechtenstein"});
+      o.push({c:"zahlen",q:"Welche Währungen heissen Krone?",a:KR.join(", ")});
+      RG.forEach(function(r){o.push({c:"zahlen",q:"Welche Länder gehören zu "+r[0]+" laut Dossier?",a:r[1]});});
+      return o;
     }
-
-    const CARDS = cardsAll();
-
-    const QUIZ = [
-      {q:"Welcher Berg gilt im Dossier als höchster Berg Europas?", c:"Mont Blanc", w:["Elbrus","Aneto","Mulhacén"], e:"Im Dossier ist der Mont Blanc (ca. 4'806 m) die erwartete Antwort. Elbrus zählt nur mit Kaukasus."},
-      {q:"Wie hoch ist der Mont Blanc ungefähr?", c:"ca. 4'806 m", w:["5'642 m","3'479 m","2'912 m"], e:"Der Elbrus wäre 5'642 m, zählt hier aber nicht als Standardantwort."},
-      {q:"In welchem Gebirge liegt der Ben Nevis?", c:"Schottisches Hochland", w:["Alpen","Zentralmassiv","Apenninen"], e:"Der Ben Nevis ist 1'345 m hoch und liegt im Norden Grossbritanniens."},
-      {q:"Höchster Berg des Skandinavischen Gebirges?", c:"Galdhøpiggen", w:["Narodnaja","Puy de Sancy","Moncayo"], e:"Er liegt in Norwegen und Schweden und ist 2'469 m hoch."},
-      {q:"Die Betische Kordillere liegt im …", c:"Süden Spaniens", w:["Norden Spaniens","Osten Europas","Norden Grossbritanniens"], e:"Höchster Berg dort ist der Mulhacén mit 3'479 m."},
-      {q:"Welches Gebirge liegt zwischen Spanien und Frankreich?", c:"Pyrenäen", w:["Alpen","Apenninen","Kantabrisches Gebirge"], e:"Höchster Berg der Pyrenäen ist der Aneto, 3'404 m."},
-      {q:"Höchster Berg der Apenninen?", c:"Corno Grande", w:["Mont Blanc","Moldoveanu","Pico Almanzor"], e:"Die Apenninen liegen in Italien. Corno Grande: 2'912 m."},
-      {q:"Das Uralgebirge gilt als Grenze im …", c:"Osten Europas", w:["Süden Spaniens","Norden Grossbritanniens","Westen Frankreichs"], e:"Höchster Berg ist die Narodnaja, 1'895 m."},
-      {q:"Wohin mündet die Themse?", c:"Nordsee", w:["Mittelmeer","Ostsee","Schwarzes Meer"], e:"Die Themse fliesst durch Grossbritannien."},
-      {q:"Wohin mündet die Donau?", c:"Schwarzes Meer", w:["Nordsee","Ostsee","Kaspisches Meer"], e:"Die Donau durchquert viele Länder von Deutschland bis zum Schwarzen Meer."},
-      {q:"Wohin mündet die Wolga?", c:"Kaspisches Meer", w:["Schwarzes Meer","Ostsee","Adriatisches Meer"], e:"Die Wolga ist ein wichtiger Fluss Russlands."},
-      {q:"Wohin mündet der Po?", c:"Adriatisches Meer", w:["Mittelmeer bei Spanien","Nordsee","Atlantischer Ozean"], e:"Der Po ist der wichtigste Fluss Italiens."},
-      {q:"Wohin mündet die Rhône?", c:"Mittelmeer", w:["Nordsee","Ostsee","Kaspisches Meer"], e:"Die Rhône fliesst durch die Schweiz und Frankreich."},
-      {q:"Welches Land ist ein Rheinland?", c:"Niederlande", w:["Polen","Ungarn","Serbien"], e:"Rheinländer: Schweiz, Liechtenstein, Österreich, Deutschland, Frankreich, Niederlande."},
-      {q:"Welche Hauptstadt liegt an der Donau?", c:"Budapest", w:["Prag","Rom","Madrid"], e:"Donau-Hauptstädte: Wien, Bratislava, Budapest, Belgrad."},
-      {q:"Wohin mündet der Dnjepr?", c:"Schwarzes Meer", w:["Ostsee","Nordsee","Atlantischer Ozean"], e:"Auch die Donau mündet ins Schwarze Meer."},
-      {q:"Deutsch ist unter anderem Amtssprache in …", c:"Liechtenstein und Belgien", w:["nur Deutschland","Irland und Malta","Portugal und Spanien"], e:"Deutsch: Deutschland, Österreich, Schweiz, Liechtenstein, Luxemburg, Belgien."},
-      {q:"Amtssprachen der Schweiz sind …", c:"Deutsch, Französisch, Italienisch, Rätoromanisch", w:["nur Deutsch und Französisch","Deutsch, Englisch, Italienisch","Französisch und Rätoromanisch"], e:"Es sind vier Amtssprachen."},
-      {q:"Die Flagge der Schweiz ist …", c:"rot mit weissem Kreuz", w:["blau mit gelbem Kreuz","weiss-rot quer","grün-weiss-rot senkrecht"], e:"Ein weisses Kreuz auf rotem Grund."},
-      {q:"Auf welchen Flaggen sieht man den Landesumriss?", c:"Kosovo und Zypern", w:["Schweiz und Österreich","Italien und Frankreich","Polen und Ukraine"], e:"Das ist die besondere Flaggen-Regel im Dossier."},
-      {q:"Autokennzeichen CH steht für …", c:"Schweiz", w:["Tschechien","Schweden","Spanien"], e:"Tschechien ist CZ, Schweden S, Spanien E."},
-      {q:"Autokennzeichen E steht für …", c:"Spanien", w:["Estland","England","Österreich"], e:"Österreich ist A. Grossbritannien hat in dieser Liste kein E."},
-      {q:"Autokennzeichen FL steht für …", c:"Liechtenstein", w:["Finnland","Frankreich","Polen"], e:"Finnland ist nicht in der Kennzeichenliste. Frankreich ist F."},
-      {q:"Volvo kommt aus …", c:"Schweden", w:["Deutschland","Italien","Tschechien"], e:"Schweden: Saab und Volvo."},
-      {q:"Seat kommt aus …", c:"Spanien", w:["Italien","Frankreich","Rumänien"], e:"Rumänien ist Dacia, Tschechien Škoda."},
-      {q:"Škoda kommt aus …", c:"Tschechien", w:["Polen","Ungarn","Russland"], e:"Russland: Lada. Rumänien: Dacia."},
-      {q:"Ferrari kommt aus …", c:"Italien", w:["Frankreich","Deutschland","Grossbritannien"], e:"Italien: Alfa Romeo, Fiat, Ferrari, Lancia."},
-      {q:"Das Atomium steht in …", c:"Brüssel, Belgien", w:["Paris, Frankreich","Berlin, Deutschland","Rom, Italien"], e:"Paris hat den Eiffelturm, Berlin das Brandenburger Tor."},
-      {q:"Die Tower Bridge steht in …", c:"London, Grossbritannien", w:["Dublin, Irland","Wien, Österreich","Athen, Griechenland"], e:"Wien hat den Stephansdom, Athen die Akropolis."},
-      {q:"Welches Land ist 2026 nicht in der EU?", c:"Schweiz", w:["Österreich","Finnland","Kroatien"], e:"Auch Liechtenstein, Norwegen, Island, Grossbritannien, Russland, Ukraine und Serbien sind nicht in der EU."},
-      {q:"Welches EU-Land hat 2026 keinen Euro?", c:"Polen", w:["Kroatien","Bulgarien","Griechenland"], e:"EU ohne Euro: Dänemark, Polen, Rumänien, Schweden, Tschechien, Ungarn. Kroatien seit 2023, Bulgarien seit 2026 mit Euro."},
-      {q:"Welches Land nutzt den Euro, ist aber nicht in der EU?", c:"Monaco", w:["Dänemark","Schweden","Polen"], e:"Euro ausserhalb der EU: Andorra, Monaco, San Marino, Vatikanstadt, Kosovo, Montenegro."},
-      {q:"Freier Personenverkehr heisst …", c:"EU-Bürger dürfen in anderen EU-Ländern leben und arbeiten.", w:["Waren ohne Binnenzölle verkaufen.","Geld frei investieren.","Nur Tourismus ohne Pass."], e:"Merksatz: Menschen, Waren, Arbeiten, Geld."},
-      {q:"Der Merksatz der vier Freiheiten ist …", c:"Menschen, Waren, Arbeiten, Geld", w:["Berge, Flüsse, Städte, Flaggen","Pass, Zoll, Steuer, Bank","Nord, West, Süd, Ost"], e:"Personen, Waren, Dienstleistungen, Kapital."},
-      {q:"Welches ist laut Dossier eines der sechs grössten Länder?", c:"Ukraine", w:["Polen","Italien","Grossbritannien"], e:"Sechs grösste: Russland, Ukraine, Frankreich, Spanien, Schweden, Deutschland."},
-      {q:"Welches ist das kleinste Land Europas laut Dossier?", c:"Vatikanstadt", w:["Monaco","Malta","Andorra"], e:"Sechs kleinste: Vatikanstadt, Monaco, San Marino, Liechtenstein, Malta, Andorra."},
-      {q:"Welche Länder nutzen den Schweizer Franken?", c:"Schweiz und Liechtenstein", w:["Schweiz und Österreich","Schweiz und Frankreich","nur die Schweiz"], e:"Liechtenstein ist nicht in der EU und nutzt den Franken."},
-      {q:"Welches Land gehört laut Dossier zu Nordeuropa?", c:"Finnland", w:["Estland","Polen","Irland"], e:"Nordeuropa: Island, Norwegen, Schweden, Finnland, Dänemark. Estland steht unter Mitteleuropa."},
-      {q:"Die Hohe Tatra liegt in …", c:"Slowakei und Polen", w:["Rumänien","Italien","Spanien"], e:"Höchster Berg: Gerlachovský štít, 2'655 m."},
-      {q:"Wohin mündet Elbe?", c:"Nordsee", w:["Ostsee","Schwarzes Meer","Mittelmeer"], e:"Die Elbe fliesst durch Tschechien und Deutschland."}
+    var CARDS=cards();
+    var QZ=[
+      {q:"Welcher Berg gilt im Dossier als höchster Berg Europas?",c:"Mont Blanc",w:["Elbrus","Aneto","Mulhacén"],e:"Im Dossier ist der Mont Blanc (ca. 4'806 m) die erwartete Antwort. Elbrus zählt nur mit Kaukasus."},
+      {q:"Wie hoch ist der Mont Blanc ungefähr?",c:"ca. 4'806 m",w:["5'642 m","3'479 m","2'912 m"],e:"Der Elbrus wäre 5'642 m, zählt hier aber nicht als Standardantwort."},
+      {q:"In welchem Gebirge liegt der Ben Nevis?",c:"Schottisches Hochland",w:["Alpen","Zentralmassiv","Apenninen"],e:"Der Ben Nevis ist 1'345 m hoch und liegt im Norden Grossbritanniens."},
+      {q:"Höchster Berg des Skandinavischen Gebirges?",c:"Galdhøpiggen",w:["Narodnaja","Puy de Sancy","Moncayo"],e:"Er liegt in Norwegen und Schweden und ist 2'469 m hoch."},
+      {q:"Die Betische Kordillere liegt im …",c:"Süden Spaniens",w:["Norden Spaniens","Osten Europas","Norden Grossbritanniens"],e:"Höchster Berg dort ist der Mulhacén mit 3'479 m."},
+      {q:"Welches Gebirge liegt zwischen Spanien und Frankreich?",c:"Pyrenäen",w:["Alpen","Apenninen","Kantabrisches Gebirge"],e:"Höchster Berg der Pyrenäen ist der Aneto, 3'404 m."},
+      {q:"Höchster Berg der Apenninen?",c:"Corno Grande",w:["Mont Blanc","Moldoveanu","Pico Almanzor"],e:"Die Apenninen liegen in Italien. Corno Grande: 2'912 m."},
+      {q:"Das Uralgebirge gilt als Grenze im …",c:"Osten Europas",w:["Süden Spaniens","Norden Grossbritanniens","Westen Frankreichs"],e:"Höchster Berg ist die Narodnaja, 1'895 m."},
+      {q:"Wohin mündet die Themse?",c:"Nordsee",w:["Mittelmeer","Ostsee","Schwarzes Meer"],e:"Die Themse fliesst durch Grossbritannien."},
+      {q:"Wohin mündet die Donau?",c:"Schwarzes Meer",w:["Nordsee","Ostsee","Kaspisches Meer"],e:"Die Donau fliesst von Deutschland bis zum Schwarzen Meer."},
+      {q:"Wohin mündet die Wolga?",c:"Kaspisches Meer",w:["Schwarzes Meer","Ostsee","Adriatisches Meer"],e:"Die Wolga ist ein wichtiger Fluss Russlands."},
+      {q:"Wohin mündet der Po?",c:"Adriatisches Meer",w:["Mittelmeer bei Spanien","Nordsee","Atlantischer Ozean"],e:"Der Po ist der wichtigste Fluss Italiens."},
+      {q:"Wohin mündet die Rhône?",c:"Mittelmeer",w:["Nordsee","Ostsee","Kaspisches Meer"],e:"Die Rhône fliesst durch die Schweiz und Frankreich."},
+      {q:"Welches Land ist ein Rheinland?",c:"Niederlande",w:["Polen","Ungarn","Serbien"],e:"Rheinländer: Schweiz, Liechtenstein, Österreich, Deutschland, Frankreich, Niederlande."},
+      {q:"Welche Hauptstadt liegt an der Donau?",c:"Budapest",w:["Prag","Rom","Madrid"],e:"Donau-Hauptstädte: Wien, Bratislava, Budapest, Belgrad."},
+      {q:"Wohin mündet der Dnjepr?",c:"Schwarzes Meer",w:["Ostsee","Nordsee","Atlantischer Ozean"],e:"Auch die Donau mündet ins Schwarze Meer."},
+      {q:"Deutsch ist unter anderem Amtssprache in …",c:"Liechtenstein und Belgien",w:["nur Deutschland","Irland und Malta","Portugal und Spanien"],e:"Deutsch: Deutschland, Österreich, Schweiz, Liechtenstein, Luxemburg, Belgien."},
+      {q:"Amtssprachen der Schweiz sind …",c:"Deutsch, Französisch, Italienisch, Rätoromanisch",w:["nur Deutsch und Französisch","Deutsch, Englisch, Italienisch","Französisch und Rätoromanisch"],e:"Es sind vier Amtssprachen."},
+      {q:"Die Flagge der Schweiz ist …",c:"rot mit weissem Kreuz",w:["blau mit gelbem Kreuz","weiss-rot quer","grün-weiss-rot senkrecht"],e:"Ein weisses Kreuz auf rotem Grund."},
+      {q:"Auf welchen Flaggen sieht man den Landesumriss?",c:"Kosovo und Zypern",w:["Schweiz und Österreich","Italien und Frankreich","Polen und Ukraine"],e:"Das ist die besondere Flaggen-Regel im Dossier."},
+      {q:"Autokennzeichen CH steht für …",c:"Schweiz",w:["Tschechien","Schweden","Spanien"],e:"Tschechien ist CZ, Schweden S, Spanien E."},
+      {q:"Autokennzeichen E steht für …",c:"Spanien",w:["Estland","England","Österreich"],e:"Österreich ist A."},
+      {q:"Autokennzeichen FL steht für …",c:"Liechtenstein",w:["Finnland","Frankreich","Polen"],e:"Frankreich ist F."},
+      {q:"Volvo kommt aus …",c:"Schweden",w:["Deutschland","Italien","Tschechien"],e:"Schweden: Saab und Volvo."},
+      {q:"Seat kommt aus …",c:"Spanien",w:["Italien","Frankreich","Rumänien"],e:"Rumänien ist Dacia, Tschechien Škoda."},
+      {q:"Škoda kommt aus …",c:"Tschechien",w:["Polen","Ungarn","Russland"],e:"Russland: Lada. Rumänien: Dacia."},
+      {q:"Ferrari kommt aus …",c:"Italien",w:["Frankreich","Deutschland","Grossbritannien"],e:"Italien: Alfa Romeo, Fiat, Ferrari, Lancia."},
+      {q:"Das Atomium steht in …",c:"Brüssel, Belgien",w:["Paris, Frankreich","Berlin, Deutschland","Rom, Italien"],e:"Paris hat den Eiffelturm, Berlin das Brandenburger Tor."},
+      {q:"Die Tower Bridge steht in …",c:"London, Grossbritannien",w:["Dublin, Irland","Wien, Österreich","Athen, Griechenland"],e:"Wien hat den Stephansdom, Athen die Akropolis."},
+      {q:"Welches Land ist 2026 nicht in der EU?",c:"Schweiz",w:["Österreich","Finnland","Kroatien"],e:"Auch Liechtenstein, Norwegen, Island, Grossbritannien, Russland, Ukraine und Serbien sind nicht in der EU."},
+      {q:"Welches EU-Land hat 2026 keinen Euro?",c:"Polen",w:["Kroatien","Bulgarien","Griechenland"],e:"EU ohne Euro: Dänemark, Polen, Rumänien, Schweden, Tschechien, Ungarn. Kroatien seit 2023, Bulgarien seit 2026 mit Euro."},
+      {q:"Welches Land nutzt den Euro, ist aber nicht in der EU?",c:"Monaco",w:["Dänemark","Schweden","Polen"],e:"Euro ausserhalb der EU: Andorra, Monaco, San Marino, Vatikanstadt, Kosovo, Montenegro."},
+      {q:"Freier Personenverkehr heisst …",c:"EU-Bürger dürfen in anderen EU-Ländern leben und arbeiten.",w:["Waren ohne Binnenzölle verkaufen.","Geld frei investieren.","Nur Tourismus ohne Pass."],e:"Merksatz: Menschen, Waren, Arbeiten, Geld."},
+      {q:"Der Merksatz der vier Freiheiten ist …",c:"Menschen, Waren, Arbeiten, Geld",w:["Berge, Flüsse, Städte, Flaggen","Pass, Zoll, Steuer, Bank","Nord, West, Süd, Ost"],e:"Personen, Waren, Dienstleistungen, Kapital."},
+      {q:"Welches ist laut Dossier eines der sechs grössten Länder?",c:"Ukraine",w:["Polen","Italien","Grossbritannien"],e:"Sechs grösste: Russland, Ukraine, Frankreich, Spanien, Schweden, Deutschland."},
+      {q:"Welches ist das kleinste Land Europas laut Dossier?",c:"Vatikanstadt",w:["Monaco","Malta","Andorra"],e:"Sechs kleinste: Vatikanstadt, Monaco, San Marino, Liechtenstein, Malta, Andorra."},
+      {q:"Welche Länder nutzen den Schweizer Franken?",c:"Schweiz und Liechtenstein",w:["Schweiz und Österreich","Schweiz und Frankreich","nur die Schweiz"],e:"Liechtenstein ist nicht in der EU und nutzt den Franken."},
+      {q:"Welches Land gehört laut Dossier zu Nordeuropa?",c:"Finnland",w:["Estland","Polen","Irland"],e:"Nordeuropa: Island, Norwegen, Schweden, Finnland, Dänemark. Estland steht unter Mitteleuropa."},
+      {q:"Die Hohe Tatra liegt in …",c:"Slowakei und Polen",w:["Rumänien","Italien","Spanien"],e:"Höchster Berg: Gerlachovský štít, 2'655 m."},
+      {q:"Wohin mündet die Elbe?",c:"Nordsee",w:["Ostsee","Schwarzes Meer","Mittelmeer"],e:"Die Elbe fliesst durch Tschechien und Deutschland."},
+      {q:"Seit wann hat Kroatien den Euro?",c:"seit 2023",w:["seit 2002","seit 2013","noch nicht"],e:"Veraltete Dossiers könnten das falsch haben."},
+      {q:"Seit wann hat Bulgarien den Euro?",c:"seit 2026",w:["seit 2007","seit 2015","noch nicht"],e:"Bulgarien ist EU-Mitglied und hat den Euro seit 2026."}
     ];
-
-    const els = {
-      heute: document.getElementById("view-heute"),
-      plan: document.getElementById("view-plan"),
-      stoff: document.getElementById("view-stoff"),
-      karten: document.getElementById("view-karten"),
-      quiz: document.getElementById("view-quiz"),
-      eltern: document.getElementById("view-eltern"),
-      fill: document.getElementById("progress-fill"),
-      bar: document.getElementById("progress-bar"),
-      ptext: document.getElementById("progress-text"),
-      best: document.getElementById("best-score"),
-      print: document.getElementById("print-sheet")
-    };
-
-    const state = {
-      view: "heute",
-      missionId: null,
-      cat: "alle",
-      idx: 0,
-      flipped: false,
-      quiz: null
-    };
-
-    function loadJSON(key, fallback) {
-      try {
-        const raw = localStorage.getItem(key);
-        return raw ? JSON.parse(raw) : fallback;
-      } catch (err) {
-        return fallback;
+    var S={view:"heute",day:null,cat:"alle",idx:0,flip:false,quiz:null,deck:CARDS};
+    function $(id){return document.getElementById(id)}
+    function load(k,fb){try{var r=localStorage.getItem(k);return r?JSON.parse(r):fb}catch(e){return fb}}
+    function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+    function prog(){return load(KP,{})}
+    function best(){var n=load(KB,null);return typeof n==="number"?n:null}
+    function esc(s){return String(s).replace(/[&<>"']/g,function(ch){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[ch]})}
+    function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+    function iso(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+    function focusDay(){var t=iso();if(t<"2026-09-15")return DAYS[0];if(t>"2026-09-24")return DAYS[DAYS.length-1];return DAYS.filter(function(x){return x.id===t})[0]||DAYS[0]}
+    function updProg(){var p=prog(),n=0;DAYS.forEach(function(d){if(p[d.id])n++});$("pfill").style.width=Math.round(n/DAYS.length*100)+"%";$("pbar").setAttribute("aria-valuenow",String(n));$("ptext").textContent=n+" von "+DAYS.length+" Tagen erledigt";var b=best();$("best").textContent=b===null?"noch keiner":b+" %"}
+    function rhythm(){return "<ol><li>5 Minuten Wiederholung</li><li>15 Minuten Lernen</li><li>10 Minuten Quiz oder Zuordnung</li><li>5 Minuten Fehler verbessern</li></ol>"}
+    function mini(title,body){return "<div class='mini'><h4>"+esc(title)+"</h4><p>"+body+"</p></div>"}
+    function explain(k){
+      if(k==="gebirge")return "<p>Merke Lage, höchsten Berg und Höhe. Im Test ist der <strong>Mont Blanc</strong> die erwartete Antwort. Der Elbrus (5'642 m) zählt nur, wenn der Kaukasus zu Europa gerechnet wird.</p>"+G.map(function(g){return mini(g[0],esc(g[1])+"<br>Höchster Berg: "+esc(g[2])+" · "+esc(g[3]))}).join("");
+      if(k==="fluesse")return "<p>Lerne Fluss, Mündung und Land.</p>"+F.map(function(f){return mini(f[0],"mündet in: "+esc(f[1])+"<br>"+esc(f[2]))}).join("")+mini("Rheinländer",esc(RH.join(", ")))+mini("Donauländer",esc(DN.join(", ")))+mini("Hauptstädte an der Donau",esc(DC.join(", ")));
+      if(k==="sprachen")return SP.map(function(s){return mini(s[0],esc(s[1]))}).join("")+mini("Amtssprachen der Schweiz",esc(CHS.join(", ")))+"<p>Flaggenfarben merken. Besonderheit: Auf den Flaggen von Kosovo und Zypern ist der Landesumriss zu sehen.</p><div class='grid grid-2'>"+FG.map(function(f){return "<div class='mini'><div class='flag' style='background:"+f[2]+"' aria-hidden='true'></div><h4>"+esc(f[0])+"</h4><p>"+esc(f[1])+"</p></div>"}).join("")+"</div>";
+      if(k==="zeichen")return "<div class='grid grid-2'>"+KZ.map(function(x){return mini(x[0],esc(x[1]))}).join("")+"</div>"+MK.map(function(m){return mini(m[0],esc(m[1]))}).join("")+WZ.map(function(z){return mini(z[0],esc(z[1]+", "+z[2]))}).join("");
+      if(k==="eu")return mini("EU-Mitgliedstaaten 2026",esc(EU.join(", ")))+mini("Nicht in der EU",esc(NEU.join(", ")))+mini("Euro-Länder 2026",esc(EURO.join(", ")))+mini("EU-Länder ohne Euro",esc(EOE.join(", ")))+mini("Euro ausserhalb der EU",esc(EAX.join(", ")))+"<p><strong>Aktuell:</strong> Kroatien verwendet den Euro seit 2023, Bulgarien seit 2026. Ältere Dossiers können das noch falsch haben.</p>";
+      if(k==="frei")return FR.map(function(f){return mini(f[0],esc(f[1]))}).join("")+mini("Merksatz","Menschen, Waren, Arbeiten, Geld");
+      if(k==="zahlen")return mini("Sechs grösste Länder",esc(G6.join(", ")))+mini("Sechs kleinste Länder",esc(K6.join(", ")))+mini("Fünf bevölkerungsreichste",esc(B5.join(", ")))+mini("Länder mit Schweizer Franken","Schweiz und Liechtenstein")+mini("Währungen mit Krone",esc(KR.join(", ")))+RG.map(function(r){return mini(r[0],esc(r[1]))}).join("");
+      if(k==="probe")return "<p>Arbeite wie in der Prüfung: 10 zufällige Fragen, ohne Hilfen. Danach nur Fehler anschauen.</p>";
+      if(k==="fehler")return "<p>Nimm rote oder unsichere Karten. Erkläre die Lösung laut. Keine neuen Themen.</p>";
+      return "<p>Nur 10 Minuten: Mont Blanc, Donau/Rhein, vier Freiheiten, Euro 2026, Schweiz nicht in der EU.</p>";
+    }
+    function exercise(k){
+      if(k==="gebirge")return "<p><strong>Übung:</strong> Nenne den höchsten Berg der Alpen und seine ungefähre Höhe.</p><p class='muted'>Lösung: Mont Blanc, ca. 4'806 m.</p>";
+      if(k==="fluesse")return "<p><strong>Übung:</strong> Welche vier Hauptstädte liegen an der Donau?</p><p class='muted'>Lösung: Wien, Bratislava, Budapest, Belgrad.</p>";
+      if(k==="sprachen")return "<p><strong>Übung:</strong> Nenne die vier Amtssprachen der Schweiz.</p><p class='muted'>Lösung: Deutsch, Französisch, Italienisch, Rätoromanisch.</p>";
+      if(k==="zeichen")return "<p><strong>Übung:</strong> CH, FL, A, D: Welche Länder?</p><p class='muted'>Lösung: Schweiz, Liechtenstein, Österreich, Deutschland.</p>";
+      if(k==="eu")return "<p><strong>Übung:</strong> Ist die Schweiz in der EU? Haben Kroatien und Bulgarien den Euro?</p><p class='muted'>Lösung: Nein / ja, seit 2023 und 2026.</p>";
+      if(k==="frei")return "<p><strong>Übung:</strong> Sage den Merksatz und erkläre eine Freiheit.</p><p class='muted'>Lösung: Menschen, Waren, Arbeiten, Geld.</p>";
+      if(k==="zahlen")return "<p><strong>Übung:</strong> Nenne die sechs kleinsten Länder.</p><p class='muted'>Lösung: Vatikanstadt, Monaco, San Marino, Liechtenstein, Malta, Andorra.</p>";
+      if(k==="probe")return "<p><strong>Übung:</strong> Starte ein Quiz mit 10 Fragen.</p><button class='btn' type='button' data-act='goto' data-view='quiz'>Zum Quiz</button>";
+      if(k==="fehler")return "<p><strong>Übung:</strong> Wiederhole unsichere Karten mündlich.</p><button class='btn' type='button' data-act='goto' data-view='karten'>Zu den Lernkarten</button>";
+      return "<p><strong>Übung:</strong> 10 Minuten Merksätze, dann aufhören.</p>";
+    }
+    function missionHTML(day,showBack){
+      var p=prog(),done=!!p[day.id];
+      return "<article class='card'><h2 id='heute-title'>"+(showBack?day.d+" · ":"")+esc(day.t)+"</h2><div><span class='pill'>"+esc(day.d)+"</span><span class='pill'>"+esc(day.m)+"</span>"+(done?"<span class='pill'>erledigt</span>":"")+"</div><h3>Drei Lernziele</h3><ol>"+day.g.map(function(x){return "<li>"+esc(x)+"</li>"}).join("")+"</ol><h3>Ablauf</h3>"+rhythm()+"<h3>Stoff</h3>"+explain(day.k)+exercise(day.k)+"<div class='row' style='margin-top:12px'><button class='btn btn-ok btn-wide' type='button' data-act='done' data-id='"+day.id+"'>"+(done?"Erledigt (zurücknehmen)":"Als erledigt markieren")+"</button></div></article>";
+    }
+    function showView(name){
+      S.view=name;
+      ["heute","plan","stoff","karten","quiz","eltern"].forEach(function(v){
+        var el=$("view-"+v);
+        if(el) el.classList.toggle("is-on",v===name);
+      });
+      var btns=document.querySelectorAll("#nav [data-view]");
+      for(var i=0;i<btns.length;i++){
+        if(btns[i].getAttribute("data-view")===name) btns[i].setAttribute("aria-current","page");
+        else btns[i].removeAttribute("aria-current");
       }
+      if(name==="heute") renderHeute();
+      if(name==="plan") renderPlan();
+      if(name==="stoff") renderStoff();
+      if(name==="karten") renderKarten();
+      if(name==="quiz") renderQuiz();
+      if(name==="eltern") renderEltern();
+      window.scrollTo(0,0);
     }
-    function saveJSON(key, val) {
-      try { localStorage.setItem(key, JSON.stringify(val)); } catch (err) {}
+    function renderHeute(){
+      var day=S.day||focusDay();
+      $("view-heute").innerHTML="<p class='muted'>Tagesmission. Starte direkt mit dem Ablauf 5, 15, 10, 5.</p>"+missionHTML(day,true);
     }
-    function progress() { return loadJSON(KEY_PROG, {}); }
-    function setProgress(p) { saveJSON(KEY_PROG, p); updateProgress(); }
-    function best() {
-      const n = loadJSON(KEY_BEST, null);
-      return typeof n === "number" ? n : null;
+    function renderPlan(){
+      var p=prog();
+      $("view-plan").innerHTML="<div class='card'><h2 id='plan-title'>Lernplan bis zum Test</h2><p>Tippe auf einen Tag, um die Mission zu öffnen.</p>"+DAYS.map(function(d){return "<button class='list-btn"+(p[d.id]?" done":"")+"' type='button' data-act='open-day' data-id='"+d.id+"'><span class='dot"+(p[d.id]?" ok":"")+"'></span>"+esc(d.d)+" · "+esc(d.t)+"<small>"+esc(d.m)+(p[d.id]?" · erledigt":"")+"</small></button>"}).join("")+"</div>";
     }
-    function setBest(n) {
-      const cur = best();
-      if (cur === null || n > cur) saveJSON(KEY_BEST, n);
-      updateProgress();
+    function renderStoff(){
+      $("view-stoff").innerHTML="<div class='card'><h2 id='stoff-title'>Lernstoff</h2><p class='muted'>Alles aus dem Dossier, mit den Euro-Updates 2023/2026.</p>"+
+        "<h3>Gebirge</h3>"+explain("gebirge")+
+        "<h3>Flüsse</h3>"+explain("fluesse")+
+        "<h3>Sprachen und Flaggen</h3>"+explain("sprachen")+
+        "<h3>Kennzeichen, Marken, Wahrzeichen</h3>"+explain("zeichen")+
+        "<h3>EU und Euro</h3>"+explain("eu")+
+        "<h3>Vier Freiheiten</h3>"+explain("frei")+
+        "<h3>Zahlen und Regionen</h3>"+explain("zahlen")+"</div>";
     }
-
-    function todayISO() {
-      const d = new Date();
-      const m = String(d.getMonth() + 1).padStart(2, "0");
-      const day = String(d.getDate()).padStart(2, "0");
-      return d.getFullYear() + "-" + m + "-" + day;
+    function filtered(){return S.cat==="alle"?CARDS:CARDS.filter(function(x){return x.c===S.cat})}
+    function renderKarten(){
+      S.deck=filtered();
+      if(S.idx>=S.deck.length) S.idx=0;
+      if(S.idx<0) S.idx=0;
+      S.flip=false;
+      var n=S.deck.length,card=S.deck[S.idx];
+      $("view-karten").innerHTML="<div class='card'><h2 id='karten-title'>Lernkarten</h2><div class='chips' role='group' aria-label='Kartenfilter'>"+CATS.map(function(c){return "<button class='chip' type='button' data-act='cat' data-cat='"+c[0]+"' aria-pressed='"+(S.cat===c[0]?"true":"false")+"'>"+esc(c[1])+"</button>"}).join("")+"</div><p class='muted' id='kcount'>Karte "+(n?S.idx+1:0)+" von "+n+"</p><button class='flash' type='button' id='flash' data-act='flip' aria-pressed='false' aria-label='Lernkarte. Antippen oder Leertaste zeigt die Lösung.'><div class='face is-on' id='front'><div class='kicker'>Frage</div><div class='qtxt'>"+(card?esc(card.q):"Keine Karten")+"</div><div class='hint'>Antippen oder Leertaste: Lösung</div></div><div class='face' id='back'><div class='kicker'>Lösung</div><div class='qtxt'>"+(card?esc(card.a):"")+"</div><div class='hint'>Nochmal antippen: Frage</div></div></button><div class='pager'><button class='btn btn-ghost' type='button' data-act='prev'>Zurück</button><button class='btn' type='button' data-act='next'>Weiter</button></div></div>";
     }
-    function focusDay() {
-      const t = todayISO();
-      if (t < "2026-09-15") return DAYS[0];
-      if (t > "2026-09-24") return DAYS[DAYS.length - 1];
-      return DAYS.find(function (d) { return d.id === t; }) || DAYS[0];
+    function paintCard(){
+      var n=S.deck.length,card=S.deck[S.idx];
+      if(!card) return;
+      var front=$("front"),back=$("back"),fl=$("flash"),cnt=$("kcount");
+      if(!front||!back||!fl) return;
+      front.querySelector(".qtxt").textContent=card.q;
+      back.querySelector(".qtxt").textContent=card.a;
+      front.classList.toggle("is-on",!S.flip);
+      back.classList.toggle("is-on",S.flip);
+      fl.setAttribute("aria-pressed",S.flip?"true":"false");
+      cnt.textContent="Karte "+(S.idx+1)+" von "+n;
     }
-
-    function shuffle(arr) {
-      const a = arr.slice();
-      for (let i = a.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        const t = a[i]; a[i] = a[j]; a[j] = t;
-      }
-      return a;
-    }
-    function esc(s) {
-      return String(s).replace(/[&<>"']/g, function (ch) {
-        return ({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;" })[ch];
+    function startQuiz(){
+      var pick=shuffle(QZ).slice(0,10).map(function(q){
+        var opts=shuffle([q.c].concat(q.w));
+        return {q:q.q,c:q.c,e:q.e,opts:opts,pick:null};
       });
+      S.quiz={i:0,score:0,items:pick,locked:false};
+      renderQuiz();
     }
-
-    function updateProgress() {
-      const p = progress();
-      let n = 0;
-      DAYS.forEach(function (d) { if (p[d.id]) n += 1; });
-      const pct = Math.round((n / DAYS.length) * 100);
-      els.fill.style.width = pct + "%";
-      els.bar.setAttribute("aria-valuenow", String(n));
-      els.ptext.textContent = n + " von " + DAYS.length + " Tagen erledigt";
-      const b = best();
-      els.best.textContent = b === null ? "noch keiner" : b + " %";
-    }
-
-    function rhythm() {
-      return "<ol><li>5 Minuten Wiederholung</li><li>15 Minuten Lernen</li><li>10 Minuten Quiz oder Zuordnung</li><li>5 Minuten Fehler verbessern</li></ol>";
-    }
-
-    function explain(topic) {
-      if (topic === "gebirge") {
-        return "<p>Merke Lage, höchsten Berg und Höhe. Im Test ist der <strong>Mont Blanc</strong> die erwartete Antwort für den höchsten Berg. Der Elbrus (5'642 m) zählt nur, wenn der Kaukasus zu Europa gerechnet wird.</p>" +
-          GEBIRGE.map(function (g) {
-            return "<div class='mini'><h4>" + esc(g[0]) + "</h4><p>" + esc(g[1]) + "<br>Höchster Berg: " + esc(g[2]) + " · " + esc(g[3]) + "</p></div>";
-          }).join("");
+    function renderQuiz(){
+      var box=$("view-quiz");
+      if(!S.quiz){
+        box.innerHTML="<div class='card'><h2 id='quiz-title'>Quiz</h2><p>10 zufällige Fragen. Antworten werden gemischt. Danach siehst du sofort, ob es stimmt.</p><p class='muted'>Ab 70 %: Gute Basis. Ab 85 %: Testbereit.</p><button class='btn btn-wide' type='button' data-act='quiz-start'>Quiz starten</button></div>";
+        return;
       }
-      if (topic === "fluesse") {
-        return "<p>Lerne Fluss, Mündung und Land. Extra: Rheinländer, Donauländer und Donau-Hauptstädte.</p>" +
-          FLUESSE.map(function (f) {
-            return "<div class='mini'><h4>" + esc(f[0]) + "</h4><p>mündet in: " + esc(f[1]) + "<br>" + esc(f[2]) + "</p></div>";
-          }).join("") +
-          "<div class='mini'><h4>Rheinländer</h4><p>" + esc(RHEIN.join(", ")) + "</p></div>" +
-          "<div class='mini'><h4>Donauländer</h4><p>" + esc(DONAU.join(", ")) + "</p></div>" +
-          "<div class='mini'><h4>Hauptstädte an der Donau</h4><p>" + esc(DONAU_CAP.join(", ")) + "</p></div>";
+      var qz=S.quiz;
+      if(qz.i>=qz.items.length){
+        var pct=Math.round(qz.score/qz.items.length*100);
+        var msg=pct>=85?"Testbereit":(pct>=70?"Gute Basis":"Noch üben");
+        var cur=best(); if(cur===null||pct>cur) save(KB,pct);
+        updProg();
+        box.innerHTML="<div class='card'><h2 id='quiz-title'>Resultat</h2><p><strong>"+qz.score+" von "+qz.items.length+" richtig · "+pct+" %</strong></p><p>"+esc(msg)+"</p><button class='btn btn-wide' type='button' data-act='quiz-start'>Neues zufälliges Quiz</button></div>";
+        return;
       }
-      if (topic === "sprachen") {
-        return SPRACHEN.map(function (s) {
-          return "<div class='mini'><h4>" + esc(s[0]) + "</h4><p>" + esc(s[1]) + "</p></div>";
-        }).join("") +
-          "<div class='mini'><h4>Amtssprachen der Schweiz</h4><p>" + esc(CH_SPR.join(", ")) + "</p></div>" +
-          "<p>Flaggen lernst du
+      var it=qz.items[qz.i];
+      var html="<div class='card'><h2 id='quiz-title'>Frage "+(qz.i+1)+" von 10</h2><p class='qtxt'>"+esc(it.q)+"</p><div id='opts'>";
+      it.opts.forEach(function(o,n){html+="<button class='opt' type='button' data-act='ans' data-n='"+n+"'"+(qz.locked?" disabled":"")+">"+esc(o)+"</button>"});
+      html+="</div><div id='qfb'></div><button class='btn btn-wide hidden' type='button' id='qnext' data-act='quiz-next'>Weiter</button></div>";
+      box.innerHTML=html;
+    }
+    function answer(n){
+      var qz=S.quiz; if(!qz||qz.locked) return;
+      var it=qz.items[qz.i],choice=it.opts[n];
+      qz.locked=true; it.pick=choice;
+      var ok=choice===it.c; if(ok) qz.score++;
+      var opts=document.querySelectorAll("#opts .opt");
+      for(var i=0;i<opts.length;i++){
+        opts[i].disabled=true;
+        if(it.opts[i]===it.c) opts[i].classList.add("is-right");
+        if(i===n&&!ok) opts[i].classList.add("is-wrong");
+      }
+      var fb=$("qfb");
+      fb.className="fb "+(ok?"ok":"bad");
+      fb.innerHTML=(ok?"Richtig. ":"Falsch. Richtig ist: "+esc(it.c)+". ")+esc(it.e);
+      var nx=$("qnext"); if(nx) nx.classList.remove("hidden");
+    }
+    function renderEltern(){
+      $("view-eltern").innerHTML="<div class='card'><h2 id='eltern-title'>Für Eltern</h2><h3>Methode 5–15–10–5</h3><p>5 Minuten altes Wissen aktivieren, 15 Minuten neuen Stoff, 10 Minuten Quiz oder Zuordnung, 5 Minuten Fehler verbessern. Am Testtag höchstens 10 Minuten Wiederholung.</p><h3>Mündlich abfragen</h3><p>Möglichst viel laut fragen und auf einer Karte oder im Atlas zeigen lassen. So merkt man Unsicherheit schneller als bei Multiple Choice.</p><h3>Ampelsystem</h3><div class='ampel'><span class='g'>Grün = sicher</span><span class='o'>Orange = unsicher</span><span class='r'>Rot = nochmals üben</span></div><p>Grün: ohne Zögern richtig. Orange: richtig nach Denken. Rot: falsch oder leer.</p><h3>Veraltete Angaben im Dossier</h3><p>Kroatien verwendet den Euro seit 2023. Bulgarien verwendet den Euro seit 2026. Beide sind EU-Mitglieder mit Euro.</p><button class='btn no-print' type='button' data-act='print'>Lernübersicht drucken</button></div>";
+      $("print-sheet").innerHTML="<h1>Lernübersicht Geografie Europa</h1><p>Colin · Test 24.09.2026</p><h2>Gebirge</h2><ul>"+G.map(function(g){return "<li>"+esc(g[0])+" · "+esc(g[1])+" · "+esc(g[2])+" · "+esc(g[3])+"</li>"}).join("")+"</ul><p>Erwartete Antwort höchster Berg: Mont Blanc. Elbrus nur mit Kaukasus.</p><h2>Flüsse</h2><ul>"+F.map(function(f){return "<li>"+esc(f[0])+" → "+esc(f[1])+" ("+esc(f[2])+")</li>"}).join("")+"</ul><p>Rheinländer: "+esc(RH.join(", "))+"</p><p>Donauländer: "+esc(DN.join(", "))+"</p><p>Donau-Hauptstädte: "+esc(DC.join(", "))+"</p><h2>Sprachen</h2><ul>"+SP.map(function(s){return "<li>"+esc(s[0])+": "+esc(s[1])+"</li>"}).join("")+"</ul><p>Schweiz: "+esc(CHS.join(", "))+"</p><h2>Kennzeichen</h2><p>"+KZ.map(function(k){return k[0]+" = "+k[1]}).join("; ")+"</p><h2>EU / Euro 2026</h2><p>Nicht EU: "+esc(NEU.join(", "))+"</p><p>EU ohne Euro: "+esc(EOE.join(", "))+"</p><p>Euro ausserhalb EU: "+esc(EAX.join(", "))+"</p><p>Kroatien Euro seit 2023, Bulgarien seit 2026.</p><h2>Vier Freiheiten</h2><p>Menschen, Waren, Arbeiten, Geld</p>";
+    }
+    document.getElementById("nav").addEventListener("click",function(e){
+      var b=e.target.closest("[data-view]");
+      if(!b||!this.contains(b)) return;
+      e.preventDefault();
+      showView(b.getAttribute("data-view"));
+    });
+    document.addEventListener("click",function(e){
+      var t=e.target.closest("[data-act]");
+      if(!t) return;
+      var act=t.getAttribute("data-act");
+      if(act==="goto") showView(t.getAttribute("data-view"));
+      if(act==="open-day"){S.day=DAYS.filter(function(d){return d.id===t.getAttribute("data-id")})[0];showView("heute")}
+      if(act==="done"){var p=prog();var id=t.getAttribute("data-id");p[id]=!p[id];save(KP,p);updProg();if(S.view==="heute")renderHeute();if(S.view==="plan")renderPlan()}
+      if(act==="cat"){S.cat=t.getAttribute("data-cat");S.idx=0;S.flip=false;renderKarten()}
+      if(act==="flip"){S.flip=!S.flip;paintCard()}
+      if(act==="prev"){if(!S.deck.length)return;S.idx=(S.idx-1+S.deck.length)%S.deck.length;S.flip=false;paintCard()}
+      if(act==="next"){if(!S.deck.length)return;S.idx=(S.idx+1)%S.deck.length;S.flip=false;paintCard()}
+      if(act==="quiz-start") startQuiz();
+      if(act==="ans") answer(Number(t.getAttribute("data-n")));
+      if(act==="quiz-next"){if(!S.quiz)return;S.quiz.i++;S.quiz.locked=false;renderQuiz()}
+      if(act==="print") window.print();
+    });
+    document.addEventListener("keydown",function(e){
+      if(S.view!=="karten") return;
+      if(e.code==="Space"||e.key===" "){e.preventDefault();S.flip=!S.flip;paintCard()}
+      if(e.key==="ArrowLeft"){S.idx=(S.idx-1+S.deck.length)%S.deck.length;S.flip=false;paintCard()}
+      if(e.key==="ArrowRight"){S.idx=(S.idx+1)%S.deck.length;S.flip=false;paintCard()}
+    });
+    $("btnReset").addEventListener("click",function(){
+      if(!confirm("Fortschritt und Quiz-Bestwert auf diesem Gerät löschen?")) return;
+      save(KP,{}); save(KB,null); S.day=null; updProg(); showView(S.view);
+    });
+    updProg();
+    showView("heute");
+  })();
+  </script>
+</body>
+</html>
